@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "00 Solution Items", "00 Solution Items", "{C18BB4D0-3060-4791-9498-2918EDAD0564}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE = LICENSE
+		README.md = README.md
+		Str.Wallpaper.sln.DotSettings = Str.Wallpaper.sln.DotSettings
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "10 Presentation", "10 Presentation", "{8EE7EEC6-A8B7-4CD1-AE23-D2B8D190F347}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "20 Domain", "20 Domain", "{D7E6ED1E-1AEB-4180-86FE-1195F0A12D95}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "30 Repository", "30 Repository", "{A2C0505E-B3E3-47AF-A146-23634C241156}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Str.Wallpaper.Wpf", "Str.Wallpaper.Wpf\Str.Wallpaper.Wpf.csproj", "{BBD42669-05E3-42BD-88FC-3FF7DBE74B26}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BBD42669-05E3-42BD-88FC-3FF7DBE74B26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBD42669-05E3-42BD-88FC-3FF7DBE74B26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBD42669-05E3-42BD-88FC-3FF7DBE74B26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBD42669-05E3-42BD-88FC-3FF7DBE74B26}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BBD42669-05E3-42BD-88FC-3FF7DBE74B26} = {8EE7EEC6-A8B7-4CD1-AE23-D2B8D190F347}
+	EndGlobalSection
+EndGlobal
