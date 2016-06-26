@@ -20,6 +20,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Str.Wallpaper.Wpf", "Str.Wa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Str.Wallpaper.Domain", "Str.Wallpaper.Domain\Str.Wallpaper.Domain.csproj", "{0E95BA0E-B5BA-4577-96DA-9015A38A64A0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Str.Wallpaper.Repository.Models", "Str.Wallpaper.Repository.Models\Str.Wallpaper.Repository.Models.csproj", "{BC80F5DE-B46C-4A84-B118-7228C60FB178}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Str.Wallpaper.Repository", "Str.Wallpaper.Repository\Str.Wallpaper.Repository.csproj", "{17E6F8FA-CFA8-4355-9C58-87B132E5AC5B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -34,6 +38,14 @@ Global
 		{0E95BA0E-B5BA-4577-96DA-9015A38A64A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0E95BA0E-B5BA-4577-96DA-9015A38A64A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0E95BA0E-B5BA-4577-96DA-9015A38A64A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC80F5DE-B46C-4A84-B118-7228C60FB178}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC80F5DE-B46C-4A84-B118-7228C60FB178}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC80F5DE-B46C-4A84-B118-7228C60FB178}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC80F5DE-B46C-4A84-B118-7228C60FB178}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17E6F8FA-CFA8-4355-9C58-87B132E5AC5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17E6F8FA-CFA8-4355-9C58-87B132E5AC5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17E6F8FA-CFA8-4355-9C58-87B132E5AC5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17E6F8FA-CFA8-4355-9C58-87B132E5AC5B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -41,5 +53,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{BBD42669-05E3-42BD-88FC-3FF7DBE74B26} = {8EE7EEC6-A8B7-4CD1-AE23-D2B8D190F347}
 		{0E95BA0E-B5BA-4577-96DA-9015A38A64A0} = {D7E6ED1E-1AEB-4180-86FE-1195F0A12D95}
+		{BC80F5DE-B46C-4A84-B118-7228C60FB178} = {A2C0505E-B3E3-47AF-A146-23634C241156}
+		{17E6F8FA-CFA8-4355-9C58-87B132E5AC5B} = {A2C0505E-B3E3-47AF-A146-23634C241156}
 	EndGlobalSection
 EndGlobal
