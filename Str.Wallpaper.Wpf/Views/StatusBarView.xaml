@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Str.Wallpaper.Wpf.Views.StatusBarView"
+﻿<UserControl x:Class="Str.Wallpaper.Wpf.Views.StatusBarView" x:ClassModifier="internal"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -29,8 +29,16 @@
       </ItemsPanelTemplate>
     </StatusBar.ItemsPanel>
 
-    <StatusBarItem Grid.Column="0" Width="18">
-      <fa:ImageAwesome Icon="{Binding Path=Icon}" Spin="{Binding Path=Spin}" Foreground="White" />
+    <StatusBarItem Grid.Column="0" Name="Icon" Width="18">
+      <StackPanel Orientation="Vertical">
+        <fa:ImageAwesome Icon="{Binding Path=Icon}" Spin="{Binding Path=Spin}" Foreground="White" />
+
+        <Popup IsOpen="{Binding Path=IsMouseOver, ElementName=Icon, Mode=OneWay}" PlacementTarget="{Binding ElementName=Icon}" Placement="Top" Margin="0,0,0,2">
+          <Border Padding="6" BorderThickness="1" BorderBrush="{StaticResource StatusBarBorderColor}" Background="{StaticResource BackgroundColor}">
+            <TextBlock Text="This is a test." Foreground="White" />
+          </Border>
+        </Popup>
+      </StackPanel>
     </StatusBarItem>
 
     <Separator Grid.Column="1" />

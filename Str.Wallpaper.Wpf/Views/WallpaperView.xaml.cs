@@ -3,7 +3,7 @@
 
 namespace Str.Wallpaper.Wpf.Views {
 
-  public partial class WallpaperView : Window {
+  internal sealed partial class WallpaperView : Window {
 
     public WallpaperView() {
       InitializeComponent();

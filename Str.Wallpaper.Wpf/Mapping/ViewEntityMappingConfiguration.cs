@@ -13,11 +13,11 @@ using Str.Wallpaper.Wpf.ViewEntities;
 namespace Str.Wallpaper.Wpf.Mapping {
 
   [Export(typeof(IAutoMapperConfiguration))]
-  public class ViewEntityMappingConfiguration : IAutoMapperConfiguration {
+  public sealed class ViewEntityMappingConfiguration : IAutoMapperConfiguration {
 
     #region IAutoMapperConfiguration Implementation
 
-    public void RegisterMappings(IMapperConfiguration config) {
+    public void RegisterMappings(IMapperConfigurationExpression config) {
       settings(config);
     }
 
@@ -25,7 +25,7 @@ namespace Str.Wallpaper.Wpf.Mapping {
 
     #region Private Methods
 
-    private static void settings(IMapperConfiguration config) {
+    private static void settings(IMapperConfigurationExpression config) {
       config.CreateMap<WindowSettings, WindowSettingsViewEntity>().ForMember(dest => dest.MainWindowState,    opt => opt.ResolveUsing(src => (WindowState)src.MainWindowState))
                                                                   .ForMember(dest => dest.PreMinimizedState,  opt => opt.ResolveUsing(src => (WindowState)src.PreMinimizedState))
                                                                   .ForMember(dest => dest.AreSettingsChanged, opt => opt.Ignore());

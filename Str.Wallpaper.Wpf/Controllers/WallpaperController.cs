@@ -25,13 +25,14 @@ using STR.MvvmCommon.Contracts;
 namespace Str.Wallpaper.Wpf.Controllers {
 
   [Export(typeof(IController))]
-  public class WallpaperController : IController {
+  public sealed class WallpaperController : IController {
 
     #region Private Fields
 
     private bool isStartupComplete;
 
     private readonly WallpaperViewModel viewModel;
+    private readonly MainMenuViewModel  menuViewModel;
 
     private readonly IMessenger messenger;
 
@@ -44,7 +45,7 @@ namespace Str.Wallpaper.Wpf.Controllers {
     #region Constructor
 
     [ImportingConstructor]
-    public WallpaperController(WallpaperViewModel ViewModel, IMessenger Messenger, IMapper Mapper, IWindowSettingsRepository SettingsRepository) {
+    public WallpaperController(WallpaperViewModel ViewModel, MainMenuViewModel MenuViewModel, IMessenger Messenger, IMapper Mapper, IWindowSettingsRepository SettingsRepository) {
       if (Application.Current != null) Application.Current.DispatcherUnhandledException += onCurrentDispatcherUnhandledException;
 
       AppDomain.CurrentDomain.UnhandledException += onDomainUnhandledException;
@@ -55,7 +56,8 @@ namespace Str.Wallpaper.Wpf.Controllers {
 
       System.Windows.Forms.Application.ThreadException += onThreadException;
 
-      viewModel = ViewModel;
+      viewModel     = ViewModel;
+      menuViewModel = MenuViewModel;
 
       messenger = Messenger;
          mapper = Mapper;
@@ -78,9 +80,9 @@ namespace Str.Wallpaper.Wpf.Controllers {
 
     private async Task onStatusTimerTick(StatusTimerTickMessage message) {
       if (viewModel.Settings.AreSettingsChanged && isStartupComplete) {
-        await settingsRepository.SaveWindowSettings(mapper.Map<WindowSettings>(viewModel.Settings));
-
         viewModel.Settings.AreSettingsChanged = false;
+
+        await saveSettings();
       }
     }
 
@@ -93,6 +95,8 @@ namespace Str.Wallpaper.Wpf.Controllers {
 
       viewModel.Loaded  = new RelayCommand<RoutedEventArgs>(onLoaded);
       viewModel.Closing = new RelayCommand<CancelEventArgs>(onClosing);
+
+      menuViewModel.Exit = new RelayCommand(onExit);
     }
 
     private void onSizeChanged(SizeChangedEventArgs args) {
@@ -110,7 +114,21 @@ namespace Str.Wallpaper.Wpf.Controllers {
 
       messenger.Send(message);
 
+      if (!message.Cancel && viewModel.Settings.AreSettingsChanged) Task.Run(saveSettings).Wait();
+
       args.Cancel = message.Cancel;
+    }
+
+    private void onExit() {
+      ApplicationClosingMessage message = new ApplicationClosingMessage();
+
+      messenger.Send(message);
+
+      if (!message.Cancel) {
+        if (viewModel.Settings.AreSettingsChanged) Task.Run(saveSettings).Wait();
+
+        Application.Current.Shutdown();
+      }
     }
 
     #endregion Commands
@@ -164,6 +182,10 @@ namespace Str.Wallpaper.Wpf.Controllers {
       if (e.Exception == null) return;
 
       messenger.SendUi(new ApplicationErrorMessage { HeaderText = "Thread Exception", Exception = e.Exception });
+    }
+
+    private async Task saveSettings() {
+      await settingsRepository.SaveWindowSettings(mapper.Map<WindowSettings>(viewModel.Settings));
     }
 
     #endregion Private Methods

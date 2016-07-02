@@ -11,7 +11,7 @@ namespace Str.Wallpaper.Wpf.ViewModels {
 
   [Export]
   [ViewModel("WallpaperViewModel")]
-  public class WallpaperViewModel : ObservableObject {
+  public sealed class WallpaperViewModel : ObservableObject {
 
     #region PrivateFields
 

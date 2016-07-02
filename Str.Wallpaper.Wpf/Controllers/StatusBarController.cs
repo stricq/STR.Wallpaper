@@ -15,7 +15,7 @@ using STR.MvvmCommon.Contracts;
 namespace Str.Wallpaper.Wpf.Controllers {
 
   [Export(typeof(IController))]
-  public class StatusBarController : IController {
+  public sealed class StatusBarController : IController {
 
     #region Private Fields
 

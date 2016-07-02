@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.Composition;
+using System.Diagnostics.CodeAnalysis;
 
 using FontAwesome.WPF;
 
@@ -10,7 +11,9 @@ namespace Str.Wallpaper.Wpf.ViewModels {
 
   [Export]
   [ViewModel("StatusBarViewModel")]
-  public class StatusBarViewModel : ObservableObject {
+  [SuppressMessage("ReSharper", "MemberCanBeInternal")]
+  [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
+  public sealed class StatusBarViewModel : ObservableObject {
 
     #region Private Fields
 

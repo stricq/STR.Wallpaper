@@ -16,7 +16,7 @@ using STR.MvvmCommon.Mef;
 
 namespace Str.Wallpaper.Wpf {
 
-  public partial class App : Application {
+  internal sealed partial class App : Application {
 
     #region Private Fields
 

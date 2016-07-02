@@ -3,9 +3,9 @@
 
 namespace Str.Wallpaper.Wpf.Views {
 
-  internal sealed partial class StatusBarView : UserControl {
+  internal sealed partial class MainMenuView : UserControl {
 
-    public StatusBarView() {
+    public MainMenuView() {
       InitializeComponent();
     }
 
