@@ -1,10 +1,15 @@
-﻿using System.Windows;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Windows;
 
 using STR.MvvmCommon;
 
 
 namespace Str.Wallpaper.Wpf.ViewEntities {
 
+  [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
+  [SuppressMessage("ReSharper", "MemberCanBeInternal")]
+  [SuppressMessage("ReSharper", "UnusedMember.Global")]
+  [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
   public class WindowSettingsViewEntity : ObservableObject {
 
     #region Private Fields

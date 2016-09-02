@@ -20,6 +20,7 @@
     </MenuItem>
 
     <MenuItem Header="_Settings" Foreground="White">
+      <MenuItem Header="_Options" Command="{Binding Path=Options}" Foreground="{StaticResource BackgroundColor}" />
     </MenuItem>
 
   </Menu>

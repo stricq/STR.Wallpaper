@@ -16,6 +16,8 @@ namespace Str.Wallpaper.Wpf.ViewModels {
 
     private RelayCommand exit;
 
+    private RelayCommand options;
+
     #endregion Private Fields
 
     #region Properties
@@ -23,6 +25,11 @@ namespace Str.Wallpaper.Wpf.ViewModels {
     public RelayCommand Exit {
       get { return exit; }
       set { SetField(ref exit, value, () => Exit); }
+    }
+
+    public RelayCommand Options {
+      get { return options; }
+      set { SetField(ref options, value, () => Options); }
     }
 
     #endregion Properties

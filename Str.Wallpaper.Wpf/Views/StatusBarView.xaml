@@ -33,8 +33,15 @@
       <StackPanel Orientation="Vertical">
         <fa:ImageAwesome Icon="{Binding Path=Icon}" Spin="{Binding Path=Spin}" Foreground="White" />
 
-        <Popup IsOpen="{Binding Path=IsMouseOver, ElementName=Icon, Mode=OneWay}" PlacementTarget="{Binding ElementName=Icon}" Placement="Top" Margin="0,0,0,2">
-          <Border Padding="6" BorderThickness="1" BorderBrush="{StaticResource StatusBarBorderColor}" Background="{StaticResource BackgroundColor}">
+        <Popup PlacementTarget="{Binding ElementName=Icon}" Placement="Top" VerticalOffset="2">
+          <Popup.IsOpen>
+            <MultiBinding Mode="OneWay" Converter="{StaticResource IsMouseOverMultiConverter}">
+              <Binding ElementName="Icon"        Path="IsMouseOver" />
+              <Binding ElementName="PopupBorder" Path="IsMouseOver" />
+            </MultiBinding>
+          </Popup.IsOpen>
+
+          <Border Name="PopupBorder" Padding="6" BorderThickness="1" BorderBrush="{StaticResource StatusBarBorderColor}" Background="{StaticResource BackgroundColor}">
             <TextBlock Text="This is a test." Foreground="White" />
           </Border>
         </Popup>
@@ -62,7 +69,7 @@
     <Separator Grid.Column="7" />
 
     <StatusBarItem Grid.Column="8">
-      <TextBlock Text="{Binding Path=NextChange, StringFormat=Next Change: {0:hh\\:mm\\:ss}}" Foreground="White" />
+      <TextBlock Text="{Binding Path=NextChange, StringFormat='Next Change: {0:hh\\:mm\\:ss}'}" Foreground="White" />
     </StatusBarItem>
 
     <Separator Grid.Column="9" />
