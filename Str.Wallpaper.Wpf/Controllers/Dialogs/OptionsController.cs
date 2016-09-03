@@ -126,9 +126,17 @@ namespace Str.Wallpaper.Wpf.Controllers.Dialogs {
     #region Save Command
 
     private async Task onSaveExecute() {
+      settingsBackup = null;
+
       messenger.Send(new CloseDialogMessage());
 
-      await settingsRepository.SaveProgramSettingsAsync(mapper.Map<ProgramSettings>(viewModel.Settings));
+      if (viewModel.Settings.AreSettingsChanged) {
+        await settingsRepository.SaveProgramSettingsAsync(mapper.Map<ProgramSettings>(viewModel.Settings));
+
+        viewModel.Settings.AreSettingsChanged = false;
+
+        messenger.Send(new ApplicationSettingsChangedMessage { Settings = viewModel.Settings });
+      }
     }
 
     #endregion Save Command

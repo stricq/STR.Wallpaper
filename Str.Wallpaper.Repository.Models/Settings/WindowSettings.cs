@@ -6,6 +6,8 @@ namespace Str.Wallpaper.Repository.Models.Settings {
   [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
   public sealed class WindowSettings {
 
+    public bool IsStartMinimized { get; set; }
+
     public double WindowW { get; set; }
 
     public double WindowH { get; set; }

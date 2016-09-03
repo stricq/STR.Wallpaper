@@ -12,6 +12,7 @@ using Str.Wallpaper.Domain.Contracts;
 
 using Str.Wallpaper.Repository.Models.Settings;
 
+using Str.Wallpaper.Wpf.Messages.Application;
 using Str.Wallpaper.Wpf.Messages.Status;
 using Str.Wallpaper.Wpf.ViewEntities;
 using Str.Wallpaper.Wpf.ViewModels;
@@ -66,6 +67,21 @@ namespace Str.Wallpaper.Wpf.Controllers {
 
       viewModel.Settings = mapper.Map<WindowSettingsViewEntity>(Task.Run(() => settingsRepository.LoadWindowSettingsAsync()).Result);
 
+      viewModel.Settings.PropertyChanged += onSettingsPropertyChanged;
+
+      if (viewModel.Settings.MainWindowState == WindowState.Minimized || viewModel.Settings.IsStartMinimized) {
+        viewModel.ShowInTaskbar = false;
+
+        viewModel.MainWindowVisibility = false;
+
+        viewModel.Settings.MainWindowState = WindowState.Minimized;
+      }
+      else {
+        viewModel.ShowInTaskbar = true;
+
+        viewModel.MainWindowVisibility = true;
+      }
+
       registerMessages();
       registerCommands();
     }
@@ -76,6 +92,8 @@ namespace Str.Wallpaper.Wpf.Controllers {
 
     private void registerMessages() {
       messenger.RegisterAsync<StatusTimerTickMessage>(this, onStatusTimerTick);
+
+      messenger.Register<ApplicationSettingsChangedMessage>(this, onApplicationSettingsChanged);
     }
 
     private async Task onStatusTimerTick(StatusTimerTickMessage message) {
@@ -84,6 +102,10 @@ namespace Str.Wallpaper.Wpf.Controllers {
 
         await saveSettings();
       }
+    }
+
+    private void onApplicationSettingsChanged(ApplicationSettingsChangedMessage message) {
+      viewModel.Settings.IsStartMinimized = message.Settings.IsStartMinimized;
     }
 
     #endregion Messages
@@ -182,6 +204,21 @@ namespace Str.Wallpaper.Wpf.Controllers {
       if (e.Exception == null) return;
 
       messenger.SendUi(new ApplicationErrorMessage { HeaderText = "Thread Exception", Exception = e.Exception });
+    }
+
+    private void onSettingsPropertyChanged(object sender, PropertyChangedEventArgs e) {
+      switch(e.PropertyName) {
+        case "MainWindowState": {
+          if (viewModel.Settings.MainWindowState == WindowState.Minimized) {
+            viewModel.MainWindowVisibility = false;
+
+            viewModel.ShowInTaskbar = false;
+          }
+          else viewModel.Settings.PreMinimizedState = viewModel.Settings.MainWindowState;
+
+          break;
+        }
+      }
     }
 
     private async Task saveSettings() {

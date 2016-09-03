@@ -71,11 +71,11 @@
                   <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <CheckBox Grid.Row="0" Grid.Column="0" Content="Start with Windows"       IsChecked="{Binding Path=Settings.IsStartWithWindows}"       Margin="0,0,0,4" VerticalContentAlignment="Center" Foreground="{StaticResource ForegroundColor}" />
-                <CheckBox Grid.Row="1" Grid.Column="0" Content="Change And Exit"          IsChecked="{Binding Path=Settings.IsChangeAndExit}"          Margin="0,4"     VerticalContentAlignment="Center" Foreground="{StaticResource ForegroundColor}" />
-                <CheckBox Grid.Row="2" Grid.Column="0" Content="Skip Startup Change"      IsChecked="{Binding Path=Settings.IsSkipStartupChange}"      Margin="0,4"     VerticalContentAlignment="Center" Foreground="{StaticResource ForegroundColor}" />
-                <CheckBox Grid.Row="0" Grid.Column="1" Content="Start Minimized"          IsChecked="{Binding Path=Settings.IsStartMinimized}"         Margin="0,4"     VerticalContentAlignment="Center" Foreground="{StaticResource ForegroundColor}" />
-                <CheckBox Grid.Row="1" Grid.Column="1" Content="Recursive Directory Scan" IsChecked="{Binding Path=Settings.IsRecursiveDirectoryScan}" Margin="0,4"     VerticalContentAlignment="Center" Foreground="{StaticResource ForegroundColor}" />
+                <CheckBox Grid.Row="0" Grid.Column="0" Content="Start with Windows"       IsChecked="{Binding Path=Settings.IsStartWithWindows}"       Margin="0,4" VerticalContentAlignment="Center" Foreground="{StaticResource ForegroundColor}" />
+                <CheckBox Grid.Row="1" Grid.Column="0" Content="Change And Exit"          IsChecked="{Binding Path=Settings.IsChangeAndExit}"          Margin="0,4" VerticalContentAlignment="Center" Foreground="{StaticResource ForegroundColor}" />
+                <CheckBox Grid.Row="2" Grid.Column="0" Content="Skip Startup Change"      IsChecked="{Binding Path=Settings.IsSkipStartupChange}"      Margin="0,4" VerticalContentAlignment="Center" Foreground="{StaticResource ForegroundColor}" />
+                <CheckBox Grid.Row="0" Grid.Column="1" Content="Start Minimized"          IsChecked="{Binding Path=Settings.IsStartMinimized}"         Margin="0,4" VerticalContentAlignment="Center" Foreground="{StaticResource ForegroundColor}" />
+                <CheckBox Grid.Row="1" Grid.Column="1" Content="Recursive Directory Scan" IsChecked="{Binding Path=Settings.IsRecursiveDirectoryScan}" Margin="0,4" VerticalContentAlignment="Center" Foreground="{StaticResource ForegroundColor}" />
               </Grid>
 
               <Grid Grid.Row="1" Margin="0,4,0,0">

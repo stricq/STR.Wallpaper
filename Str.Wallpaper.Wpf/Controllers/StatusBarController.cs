@@ -5,6 +5,7 @@ using System.Windows.Threading;
 
 using FontAwesome.WPF;
 
+using Str.Wallpaper.Wpf.Messages.Application;
 using Str.Wallpaper.Wpf.Messages.Status;
 using Str.Wallpaper.Wpf.ViewModels;
 
@@ -58,7 +59,15 @@ namespace Str.Wallpaper.Wpf.Controllers {
     #region Messages
 
     private void registerMessages() {
+      messenger.Register<ApplicationSettingsChangedMessage>(this, onApplicationSettingsChanged);
+    }
 
+    private void onApplicationSettingsChanged(ApplicationSettingsChangedMessage message) {
+      if (changeMinutes != message.Settings.ChangeMinutes) {
+        changeMinutes = message.Settings.ChangeMinutes;
+
+        viewModel.NextChange = TimeSpan.FromMinutes(changeMinutes);
+      }
     }
 
     #endregion Messages

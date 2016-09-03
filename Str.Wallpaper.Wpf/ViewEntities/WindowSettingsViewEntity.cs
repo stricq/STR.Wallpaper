@@ -16,6 +16,8 @@ namespace Str.Wallpaper.Wpf.ViewEntities {
 
     private bool areSettingsChanged;
 
+    private bool isStartMinimized;
+
     private double windowW;
     private double windowH;
 
@@ -34,6 +36,11 @@ namespace Str.Wallpaper.Wpf.ViewEntities {
     public bool AreSettingsChanged {
       get { return areSettingsChanged; }
       set { SetField(ref areSettingsChanged, value, () => AreSettingsChanged); }
+    }
+
+    public bool IsStartMinimized {
+      get { return isStartMinimized; }
+      set { AreSettingsChanged |= SetField(ref isStartMinimized, value, () => IsStartMinimized); }
     }
 
     public double WindowW {
