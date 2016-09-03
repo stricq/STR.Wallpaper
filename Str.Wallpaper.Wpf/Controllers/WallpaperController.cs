@@ -64,7 +64,7 @@ namespace Str.Wallpaper.Wpf.Controllers {
 
       settingsRepository = SettingsRepository;
 
-      viewModel.Settings = mapper.Map<WindowSettingsViewEntity>(Task.Run(() => settingsRepository.LoadWindowSettings()).Result);
+      viewModel.Settings = mapper.Map<WindowSettingsViewEntity>(Task.Run(() => settingsRepository.LoadWindowSettingsAsync()).Result);
 
       registerMessages();
       registerCommands();
@@ -185,7 +185,7 @@ namespace Str.Wallpaper.Wpf.Controllers {
     }
 
     private async Task saveSettings() {
-      await settingsRepository.SaveWindowSettings(mapper.Map<WindowSettings>(viewModel.Settings));
+      await settingsRepository.SaveWindowSettingsAsync(mapper.Map<WindowSettings>(viewModel.Settings));
     }
 
     #endregion Private Methods

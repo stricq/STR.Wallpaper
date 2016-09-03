@@ -3,8 +3,10 @@
              xmlns:b="clr-namespace:Str.Wallpaper.Wpf.Behaviors"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:mvvm="http://schemas.stricq.com/mvvmcommon/"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mvvm:ViewModelLocator.ComposedViewModel="OptionsViewModel"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600">
 
@@ -23,7 +25,7 @@
             <Grid Margin="6">
               <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="3" />
+                <RowDefinition Height="6" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
               </Grid.RowDefinitions>
@@ -33,10 +35,10 @@
               </Grid.ColumnDefinitions>
 
               <Label   Grid.Row="0" Grid.Column="0" Content="Username:"   HorizontalAlignment="Right" Foreground="{StaticResource ForegroundColor}" />
-              <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Path=User.Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Margin="0,2,0,0" Width="200" Height="19" HorizontalAlignment="Left" IsEnabled="{Binding Path=IsNotOnline}" />
+              <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Path=User.Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="200" HorizontalAlignment="Left" VerticalContentAlignment="Center" IsEnabled="{Binding Path=IsNotOnline}" />
 
               <Label   Grid.Row="2" Grid.Column="0" Content="Password:"   HorizontalAlignment="Right" Foreground="{StaticResource ForegroundColor}" />
-              <PasswordBox Grid.Row="2" Grid.Column="1" Margin="0,2,0,0" Width="200" Height="19" HorizontalAlignment="Left" b:PasswordBoxBehaviors.Attach="True" b:PasswordBoxBehaviors.Password="{Binding Path=User.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontFamily="Segoe UI" IsEnabled="{Binding Path=IsNotOnline}" />
+              <PasswordBox Grid.Row="2" Grid.Column="1" Width="200" HorizontalAlignment="Left" VerticalContentAlignment="Center" b:PasswordBoxBehaviors.Attach="True" b:PasswordBoxBehaviors.Password="{Binding Path=User.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontFamily="Segoe UI" IsEnabled="{Binding Path=IsNotOnline}" />
 
               <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,6,0,0">
                 <Grid.ColumnDefinitions>
@@ -52,12 +54,90 @@
           </TabItem>
 
           <TabItem Header="Wallpaper Settings">
+            <Grid Margin="6">
+              <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+              </Grid.RowDefinitions>
+
+              <Grid Grid.Row="0">
+                <Grid.RowDefinitions>
+                  <RowDefinition />
+                  <RowDefinition />
+                  <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="*" />
+                  <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <CheckBox Grid.Row="0" Grid.Column="0" Content="Start with Windows"       IsChecked="{Binding Path=Settings.IsStartWithWindows}"       Margin="0,0,0,4" VerticalContentAlignment="Center" Foreground="{StaticResource ForegroundColor}" />
+                <CheckBox Grid.Row="1" Grid.Column="0" Content="Change And Exit"          IsChecked="{Binding Path=Settings.IsChangeAndExit}"          Margin="0,4"     VerticalContentAlignment="Center" Foreground="{StaticResource ForegroundColor}" />
+                <CheckBox Grid.Row="2" Grid.Column="0" Content="Skip Startup Change"      IsChecked="{Binding Path=Settings.IsSkipStartupChange}"      Margin="0,4"     VerticalContentAlignment="Center" Foreground="{StaticResource ForegroundColor}" />
+                <CheckBox Grid.Row="0" Grid.Column="1" Content="Start Minimized"          IsChecked="{Binding Path=Settings.IsStartMinimized}"         Margin="0,4"     VerticalContentAlignment="Center" Foreground="{StaticResource ForegroundColor}" />
+                <CheckBox Grid.Row="1" Grid.Column="1" Content="Recursive Directory Scan" IsChecked="{Binding Path=Settings.IsRecursiveDirectoryScan}" Margin="0,4"     VerticalContentAlignment="Center" Foreground="{StaticResource ForegroundColor}" />
+              </Grid>
+
+              <Grid Grid.Row="1" Margin="0,4,0,0">
+                <Grid.RowDefinitions>
+                  <RowDefinition />
+                  <RowDefinition Height="6" />
+                  <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="Auto" />
+                  <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Label  Grid.Row="0" Grid.Column="0" Content="Change Minutes:" Foreground="{StaticResource ForegroundColor}" />
+                <xctk:IntegerUpDown Grid.Row="0" Grid.Column="1" Maximum="14400" Minimum="0" Increment="1" Value="{Binding Path=Settings.ChangeMinutes, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalContentAlignment="Center" />
+
+                <Label  Grid.Row="2" Grid.Column="0" Content="Cache Directory:" VerticalAlignment="Center" Foreground="{StaticResource ForegroundColor}" />
+                <Grid Grid.Row="2" Grid.Column="1">
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                  </Grid.ColumnDefinitions>
+                  <TextBox Grid.Column="0" Text="{Binding Path=Settings.ImageCacheDirectory, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" IsReadOnly="True" IsReadOnlyCaretVisible="True" />
+                  <Button Grid.Column="1" Command="{Binding Path=SelectCacheDirectory}" Margin="4,0,0,0" HorizontalAlignment="Left">
+                    <fa:FontAwesome Icon="FolderOpen" Margin="4" Foreground="DarkOrange" />
+                  </Button>
+                </Grid>
+              </Grid>
+
+            </Grid>
           </TabItem>
 
           <TabItem Header="Image Filters">
+            <Grid Margin="5">
+              <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="6" />
+                <RowDefinition Height="Auto" />
+              </Grid.RowDefinitions>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="4" />
+                <ColumnDefinition Width="Auto" />
+              </Grid.ColumnDefinitions>
+
+              <CheckBox Grid.Row="0" Grid.Column="0" Content="Minimum Width:" IsChecked="{Binding Path=Settings.UseFilterMinimumWidth}" VerticalContentAlignment="Center" Foreground="{StaticResource ForegroundColor}" />
+              <xctk:IntegerUpDown Grid.Row="0" Grid.Column="2" Maximum="2147483647" Minimum="320" Increment="8" Value="{Binding Path=Settings.FilterMinimumWidth,  UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Width="80" VerticalContentAlignment="Center" />
+
+              <CheckBox Grid.Row="2" Grid.Column="0" Content="Minimum Height:" IsChecked="{Binding Path=Settings.UseFilterMinimumHeight}" VerticalContentAlignment="Center" Foreground="{StaticResource ForegroundColor}" />
+              <xctk:IntegerUpDown Grid.Row="2" Grid.Column="2" Maximum="2147483647" Minimum="320" Increment="8" Value="{Binding Path=Settings.FilterMinimumHeight, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Width="80" VerticalContentAlignment="Center" />
+
+            </Grid>
           </TabItem>
 
           <TabItem Header="Drag and Drop">
+            <Grid Margin="6">
+              <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+              </Grid.RowDefinitions>
+
+              <CheckBox Grid.Row="0" Content="Drop Full Folder Path" IsChecked="{Binding Path=Settings.UseFullPathDrop}" VerticalContentAlignment="Center" Foreground="{StaticResource ForegroundColor}" ToolTip="When dropping a folder into another collection, recreate the full path of the folder from the source collection." />
+            </Grid>
           </TabItem>
 
         </TabControl>

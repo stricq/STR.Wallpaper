@@ -1,8 +1,10 @@
-﻿
+﻿using System.Diagnostics.CodeAnalysis;
+
 
 namespace Str.Wallpaper.Repository.Models.Settings {
 
-  public class WindowSettings {
+  [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
+  public sealed class WindowSettings {
 
     public double WindowW { get; set; }
 

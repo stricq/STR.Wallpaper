@@ -7,9 +7,9 @@ namespace Str.Wallpaper.Domain.Contracts {
 
   public interface IWindowSettingsRepository {
 
-    Task<WindowSettings> LoadWindowSettings();
+    Task<WindowSettings> LoadWindowSettingsAsync();
 
-    Task SaveWindowSettings(WindowSettings settings);
+    Task SaveWindowSettingsAsync(WindowSettings settings);
 
   }
 

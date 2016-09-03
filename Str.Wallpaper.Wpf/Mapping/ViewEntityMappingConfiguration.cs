@@ -26,6 +26,12 @@ namespace Str.Wallpaper.Wpf.Mapping {
     #region Private Methods
 
     private static void settings(IMapperConfigurationExpression config) {
+      config.CreateMap<ProgramSettings, ProgramSettingsViewEntity>().ForMember(dest => dest.AreSettingsChanged, opt => opt.Ignore());
+
+      config.CreateMap<ProgramSettingsViewEntity, ProgramSettings>();
+
+      config.CreateMap<ProgramSettingsViewEntity, ProgramSettingsViewEntity>();
+
       config.CreateMap<WindowSettings, WindowSettingsViewEntity>().ForMember(dest => dest.MainWindowState,    opt => opt.ResolveUsing(src => (WindowState)src.MainWindowState))
                                                                   .ForMember(dest => dest.PreMinimizedState,  opt => opt.ResolveUsing(src => (WindowState)src.PreMinimizedState))
                                                                   .ForMember(dest => dest.AreSettingsChanged, opt => opt.Ignore());

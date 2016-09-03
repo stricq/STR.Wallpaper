@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contracts\IAutoMapperConfiguration.cs" />
+    <Compile Include="Contracts\IProgramSettingsRepository.cs" />
     <Compile Include="Contracts\IWindowSettingsRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
