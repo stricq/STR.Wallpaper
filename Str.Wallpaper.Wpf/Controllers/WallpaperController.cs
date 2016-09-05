@@ -74,11 +74,10 @@ namespace Str.Wallpaper.Wpf.Controllers {
       if (viewModel.Settings.MainWindowState == WindowState.Minimized || viewModel.Settings.IsStartMinimized) {
         viewModel.Settings.MainWindowState = WindowState.Minimized;
 
-        viewModel.MainWindowVisibility = false;
-        viewModel.ShowInTaskbar        = false;
+        viewModel.MainWindowVisibility = Visibility.Hidden;
       }
       else {
-        viewModel.MainWindowVisibility = true;
+        viewModel.MainWindowVisibility = Visibility.Visible;
         viewModel.ShowInTaskbar        = true;
       }
 
@@ -117,8 +116,9 @@ namespace Str.Wallpaper.Wpf.Controllers {
     private void registerCommands() {
       viewModel.SizeChanged = new RelayCommand<SizeChangedEventArgs>(onSizeChanged);
 
-      viewModel.Loaded  = new RelayCommand<RoutedEventArgs>(onLoaded);
-      viewModel.Closing = new RelayCommand<CancelEventArgs>(onClosing);
+      viewModel.Initialized = new RelayCommand<EventArgs>(onInitialized);
+      viewModel.Loaded      = new RelayCommand<RoutedEventArgs>(onLoaded);
+      viewModel.Closing     = new RelayCommand<CancelEventArgs>(onClosing);
 
       menuViewModel.Exit = new RelayCommand(onExit);
 
@@ -130,11 +130,13 @@ namespace Str.Wallpaper.Wpf.Controllers {
       viewModel.Settings.SplitterDistance = args.NewSize.Width + 6;
     }
 
-    private void onLoaded(RoutedEventArgs args) {
+    private void onInitialized(EventArgs args) {
       isStartupComplete = true;
 
-      if (viewModel.Settings.MainWindowState == WindowState.Minimized) viewModel.MainWindowVisibility = false;
+      messenger.Send(new ApplicationInitializedMessage());
+    }
 
+    private void onLoaded(RoutedEventArgs args) {
       messenger.Send(new ApplicationLoadedMessage());
     }
 
@@ -164,7 +166,7 @@ namespace Str.Wallpaper.Wpf.Controllers {
       if (viewModel.Settings.MainWindowState != WindowState.Minimized) return;
 
       viewModel.ShowInTaskbar = true;
-      viewModel.MainWindowVisibility = true;
+      viewModel.MainWindowVisibility = Visibility.Visible;
       viewModel.Show();
 
       viewModel.Settings.MainWindowState = viewModel.Settings.PreMinimizedState;
@@ -232,7 +234,7 @@ namespace Str.Wallpaper.Wpf.Controllers {
       switch(e.PropertyName) {
         case "MainWindowState": {
           if (viewModel.Settings.MainWindowState == WindowState.Minimized) {
-            viewModel.MainWindowVisibility = false;
+            viewModel.MainWindowVisibility = Visibility.Hidden;
             viewModel.ShowInTaskbar        = false;
           }
           else viewModel.Settings.PreMinimizedState = viewModel.Settings.MainWindowState;

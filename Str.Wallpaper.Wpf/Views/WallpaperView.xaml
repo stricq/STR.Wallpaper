@@ -5,10 +5,10 @@
         xmlns:dv="http://schemas.stricq.com/dialogview/"
         xmlns:mvvm="http://schemas.stricq.com/mvvmcommon/"
         mvvm:UIElementBehaviors.Focus="{Binding Path=Focus}"
+        mvvm:FrameworkElementBehaviors.InitializedCommand="{Binding Path=Initialized}"
         mvvm:FrameworkElementBehaviors.LoadedCommand="{Binding Path=Loaded}"
         mvvm:WindowBehaviors.ClosingCommand="{Binding Path=Closing}"
         mvvm:WindowBehaviors.Show="{Binding Path=Show}"
-        mvvm:WindowBehaviors.Hide="{Binding Path=Hide}"
         mvvm:WindowBehaviors.Activate="{Binding Path=Activate}"
         mvvm:ViewModelLocator.ComposedViewModel="WallpaperViewModel"
         Title="STR Wallpaper v7 - STR Programming Services"
@@ -21,7 +21,7 @@
           WindowState="{Binding Path=Settings.MainWindowState, Mode=TwoWay}"
               Topmost="{Binding Path=TopMost,                  Mode=TwoWay}"
         ShowInTaskbar="{Binding Path=ShowInTaskbar,            Mode=TwoWay}"
-           Visibility="{Binding Path=MainWindowVisibility,     Mode=TwoWay, Converter={StaticResource VisibilityConverter}}"
+           Visibility="{Binding Path=MainWindowVisibility,     Mode=TwoWay}"
         FontFamily="Tahoma">
 
   <Grid>

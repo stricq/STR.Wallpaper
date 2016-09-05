@@ -64,10 +64,10 @@ namespace Str.Wallpaper.Wpf.Controllers.Dialogs {
     #region Messages
 
     private void registerMessages() {
-      messenger.Register<ApplicationLoadedMessage>(this, onApplicationLoaded);
+      messenger.Register<ApplicationInitializedMessage>(this, onApplicationInitialized);
     }
 
-    private void onApplicationLoaded(ApplicationLoadedMessage message) {
+    private void onApplicationInitialized(ApplicationInitializedMessage message) {
       viewModel.Settings = mapper.Map<ProgramSettingsViewEntity>(Task.Run(() => settingsRepository.LoadProgramSettingsAsync()).Result);
 
       messenger.Send(new ApplicationSettingsChangedMessage { Settings = viewModel.Settings });

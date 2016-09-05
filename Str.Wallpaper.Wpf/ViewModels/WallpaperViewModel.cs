@@ -19,15 +19,17 @@ namespace Str.Wallpaper.Wpf.ViewModels {
 
     #region PrivateFields
 
-    private bool mainWindowVisibility;
+    private Visibility mainWindowVisibility;
+
     private bool showInTaskbar;
     private bool topMost;
 
     private Action show = () => { };
-    private Action hide = () => { };
 
     private Func<bool> focus    = () => true;
     private Func<bool> activate = () => true;
+
+    private RelayCommand<EventArgs> initialized;
 
     private RelayCommand<RoutedEventArgs> loaded;
 
@@ -41,7 +43,7 @@ namespace Str.Wallpaper.Wpf.ViewModels {
 
     #region Properties
 
-    public bool MainWindowVisibility {
+    public Visibility MainWindowVisibility {
       get { return mainWindowVisibility; }
       set { SetField(ref mainWindowVisibility, value, () => MainWindowVisibility); }
     }
@@ -61,11 +63,6 @@ namespace Str.Wallpaper.Wpf.ViewModels {
       set { SetField(ref show, value, () => Show); }
     }
 
-    public Action Hide {
-      get { return hide; }
-      set { SetField(ref hide, value, () => Hide); }
-    }
-
     public Func<bool> Focus {
       get { return focus; }
       set { SetField(ref focus, value, () => Focus); }
@@ -74,6 +71,11 @@ namespace Str.Wallpaper.Wpf.ViewModels {
     public Func<bool> Activate {
       get { return activate; }
       set { SetField(ref activate, value, () => Activate); }
+    }
+
+    public RelayCommand<EventArgs> Initialized {
+      get { return initialized; }
+      set { SetField(ref initialized, value, () => Initialized); }
     }
 
     public RelayCommand<RoutedEventArgs> Loaded {
