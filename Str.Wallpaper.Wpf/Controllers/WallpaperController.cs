@@ -32,8 +32,9 @@ namespace Str.Wallpaper.Wpf.Controllers {
 
     private bool isStartupComplete;
 
-    private readonly WallpaperViewModel viewModel;
-    private readonly MainMenuViewModel  menuViewModel;
+    private readonly WallpaperViewModel      viewModel;
+    private readonly MainMenuViewModel   menuViewModel;
+    private readonly NotifyIconViewModel iconViewModel;
 
     private readonly IMessenger messenger;
 
@@ -46,7 +47,7 @@ namespace Str.Wallpaper.Wpf.Controllers {
     #region Constructor
 
     [ImportingConstructor]
-    public WallpaperController(WallpaperViewModel ViewModel, MainMenuViewModel MenuViewModel, IMessenger Messenger, IMapper Mapper, IWindowSettingsRepository SettingsRepository) {
+    public WallpaperController(WallpaperViewModel ViewModel, MainMenuViewModel MenuViewModel, NotifyIconViewModel IconViewModel, IMessenger Messenger, IMapper Mapper, IWindowSettingsRepository SettingsRepository) {
       if (Application.Current != null) Application.Current.DispatcherUnhandledException += onCurrentDispatcherUnhandledException;
 
       AppDomain.CurrentDomain.UnhandledException += onDomainUnhandledException;
@@ -57,30 +58,31 @@ namespace Str.Wallpaper.Wpf.Controllers {
 
       System.Windows.Forms.Application.ThreadException += onThreadException;
 
-      viewModel     = ViewModel;
+          viewModel =     ViewModel;
       menuViewModel = MenuViewModel;
+      iconViewModel = IconViewModel;
 
       messenger = Messenger;
          mapper = Mapper;
 
       settingsRepository = SettingsRepository;
 
+      iconViewModel.TooltipText = "STR Wallpaper v7";
+
       viewModel.Settings = mapper.Map<WindowSettingsViewEntity>(Task.Run(() => settingsRepository.LoadWindowSettingsAsync()).Result);
 
-      viewModel.Settings.PropertyChanged += onSettingsPropertyChanged;
-
       if (viewModel.Settings.MainWindowState == WindowState.Minimized || viewModel.Settings.IsStartMinimized) {
-        viewModel.ShowInTaskbar = false;
+        viewModel.Settings.MainWindowState = WindowState.Minimized;
 
         viewModel.MainWindowVisibility = false;
-
-        viewModel.Settings.MainWindowState = WindowState.Minimized;
+        viewModel.ShowInTaskbar        = false;
       }
       else {
-        viewModel.ShowInTaskbar = true;
-
         viewModel.MainWindowVisibility = true;
+        viewModel.ShowInTaskbar        = true;
       }
+
+      viewModel.Settings.PropertyChanged += onSettingsPropertyChanged;
 
       registerMessages();
       registerCommands();
@@ -119,6 +121,9 @@ namespace Str.Wallpaper.Wpf.Controllers {
       viewModel.Closing = new RelayCommand<CancelEventArgs>(onClosing);
 
       menuViewModel.Exit = new RelayCommand(onExit);
+
+      iconViewModel.Exit        = new RelayCommand(onExit);
+      iconViewModel.DoubleClick = new RelayCommand(onDoubleClick);
     }
 
     private void onSizeChanged(SizeChangedEventArgs args) {
@@ -127,6 +132,8 @@ namespace Str.Wallpaper.Wpf.Controllers {
 
     private void onLoaded(RoutedEventArgs args) {
       isStartupComplete = true;
+
+      if (viewModel.Settings.MainWindowState == WindowState.Minimized) viewModel.MainWindowVisibility = false;
 
       messenger.Send(new ApplicationLoadedMessage());
     }
@@ -151,6 +158,21 @@ namespace Str.Wallpaper.Wpf.Controllers {
 
         Application.Current.Shutdown();
       }
+    }
+
+    private void onDoubleClick() {
+      if (viewModel.Settings.MainWindowState != WindowState.Minimized) return;
+
+      viewModel.ShowInTaskbar = true;
+      viewModel.MainWindowVisibility = true;
+      viewModel.Show();
+
+      viewModel.Settings.MainWindowState = viewModel.Settings.PreMinimizedState;
+
+      viewModel.Activate();
+      viewModel.TopMost = true;
+      viewModel.TopMost = false;
+      viewModel.Focus();
     }
 
     #endregion Commands
@@ -211,8 +233,7 @@ namespace Str.Wallpaper.Wpf.Controllers {
         case "MainWindowState": {
           if (viewModel.Settings.MainWindowState == WindowState.Minimized) {
             viewModel.MainWindowVisibility = false;
-
-            viewModel.ShowInTaskbar = false;
+            viewModel.ShowInTaskbar        = false;
           }
           else viewModel.Settings.PreMinimizedState = viewModel.Settings.MainWindowState;
 

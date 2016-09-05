@@ -4,8 +4,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:dv="http://schemas.stricq.com/dialogview/"
         xmlns:mvvm="http://schemas.stricq.com/mvvmcommon/"
+        mvvm:UIElementBehaviors.Focus="{Binding Path=Focus}"
         mvvm:FrameworkElementBehaviors.LoadedCommand="{Binding Path=Loaded}"
         mvvm:WindowBehaviors.ClosingCommand="{Binding Path=Closing}"
+        mvvm:WindowBehaviors.Show="{Binding Path=Show}"
+        mvvm:WindowBehaviors.Hide="{Binding Path=Hide}"
+        mvvm:WindowBehaviors.Activate="{Binding Path=Activate}"
         mvvm:ViewModelLocator.ComposedViewModel="WallpaperViewModel"
         Title="STR Wallpaper v7 - STR Programming Services"
         Icon="/Str.Wallpaper.Wpf;component/Images/STR.WallpaperIcon.ico"
@@ -21,6 +25,7 @@
         FontFamily="Tahoma">
 
   <Grid>
+
     <Grid>
       <Grid.RowDefinitions>
         <RowDefinition Height="Auto" />
@@ -61,6 +66,8 @@
     </Grid>
 
     <dv:DialogView />
+
+    <v:NotifyIconView />
 
   </Grid>
 

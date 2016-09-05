@@ -24,6 +24,7 @@ namespace Str.Wallpaper.Wpf.ViewModels {
     private bool topMost;
 
     private Action show = () => { };
+    private Action hide = () => { };
 
     private Func<bool> focus    = () => true;
     private Func<bool> activate = () => true;
@@ -58,6 +59,11 @@ namespace Str.Wallpaper.Wpf.ViewModels {
     public Action Show {
       get { return show; }
       set { SetField(ref show, value, () => Show); }
+    }
+
+    public Action Hide {
+      get { return hide; }
+      set { SetField(ref hide, value, () => Hide); }
     }
 
     public Func<bool> Focus {

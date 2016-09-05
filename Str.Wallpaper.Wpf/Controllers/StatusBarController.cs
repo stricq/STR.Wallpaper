@@ -10,6 +10,7 @@ using Str.Wallpaper.Wpf.Messages.Status;
 using Str.Wallpaper.Wpf.ViewModels;
 
 using STR.Common.Extensions;
+
 using STR.MvvmCommon.Contracts;
 
 
@@ -74,8 +75,8 @@ namespace Str.Wallpaper.Wpf.Controllers {
 
     #region Private Methods
 
-    private async void onTimerTick(object sender, EventArgs e) {
-      await messenger.SendAsync(new StatusTimerTickMessage());
+    private void onTimerTick(object sender, EventArgs e) {
+      messenger.SendAsync(new StatusTimerTickMessage()).FireAndForget();
 
       using(Process process = Process.GetCurrentProcess()) {
         viewModel.Memory = process.WorkingSet64 / 1024.0 / 1024.0;
@@ -87,7 +88,7 @@ namespace Str.Wallpaper.Wpf.Controllers {
         if (viewModel.NextChange.TotalSeconds.EqualInPercentRange(0.0)) {
           viewModel.NextChange = TimeSpan.FromMinutes(changeMinutes);
 
-          await messenger.SendAsync(new StatusChangeWallpaperMessage());
+          messenger.SendAsync(new StatusChangeWallpaperMessage()).FireAndForget();
         }
       }
 

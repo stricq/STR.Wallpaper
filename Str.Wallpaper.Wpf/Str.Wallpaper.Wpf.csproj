@@ -65,6 +65,10 @@
       <HintPath>..\packages\FontAwesome.WPF.4.5.0.8\lib\net40\FontAwesome.WPF.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Hardcodet.Wpf.TaskbarNotification, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Hardcodet.NotifyIcon.Wpf.1.0.8\lib\net451\Hardcodet.Wpf.TaskbarNotification.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Ookii.Dialogs.Wpf, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0c15020868fd6249, processorArchitecture=MSIL">
       <HintPath>..\packages\Ookii.Dialogs.1.0\lib\net35\Ookii.Dialogs.Wpf.dll</HintPath>
       <Private>True</Private>
@@ -82,11 +86,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="STR.MvvmCommon, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\STR.MvvmCommon.Mef.1.0.16002.4\lib\net45\STR.MvvmCommon.dll</HintPath>
+      <HintPath>..\packages\STR.MvvmCommon.Mef.1.0.16248.1\lib\net45\STR.MvvmCommon.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="STR.MvvmCommon.Mef, Version=1.0.5845.33361, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\STR.MvvmCommon.Mef.1.0.16002.4\lib\net45\STR.MvvmCommon.Mef.dll</HintPath>
+    <Reference Include="STR.MvvmCommon.Mef, Version=1.0.6091.19486, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\STR.MvvmCommon.Mef.1.0.16248.1\lib\net45\STR.MvvmCommon.Mef.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -159,6 +163,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\NotifyIconView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\StatusBarView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -185,6 +193,7 @@
     <Compile Include="ViewEntities\WindowSettingsViewEntity.cs" />
     <Compile Include="ViewModels\Dialogs\OptionsViewModel.cs" />
     <Compile Include="ViewModels\MainMenuViewModel.cs" />
+    <Compile Include="ViewModels\NotifyIconViewModel.cs" />
     <Compile Include="ViewModels\StatusBarViewModel.cs" />
     <Compile Include="ViewModels\WallpaperViewModel.cs" />
     <Compile Include="Views\Dialogs\OptionsView.xaml.cs">
@@ -192,6 +201,9 @@
     </Compile>
     <Compile Include="Views\MainMenuView.xaml.cs">
       <DependentUpon>MainMenuView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NotifyIconView.xaml.cs">
+      <DependentUpon>NotifyIconView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\StatusBarView.xaml.cs">
       <DependentUpon>StatusBarView.xaml</DependentUpon>
