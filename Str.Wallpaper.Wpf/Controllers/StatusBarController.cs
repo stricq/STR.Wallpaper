@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.Composition;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using System.Windows.Threading;
 
 using FontAwesome.WPF;
@@ -23,6 +24,8 @@ namespace Str.Wallpaper.Wpf.Controllers {
 
     private int changeMinutes;
 
+    private DispatcherTimer timer;
+
     private readonly StatusBarViewModel viewModel;
 
     private readonly TimeSpan oneSecond = TimeSpan.FromSeconds(1);
@@ -39,8 +42,12 @@ namespace Str.Wallpaper.Wpf.Controllers {
 
       messenger = Messenger;
 
-      DispatcherTimer timer = new DispatcherTimer();
+      timer = new DispatcherTimer();
+    }
 
+    public int InitializePriority { get; } = 100;
+
+    public Task InitializeAsync() {
       timer.Tick    += onTimerTick;
       timer.Interval = oneSecond;
 
@@ -53,6 +60,8 @@ namespace Str.Wallpaper.Wpf.Controllers {
       changeMinutes = 15;
 
       registerMessages();
+
+      return Task.CompletedTask;
     }
 
     #endregion Constructor

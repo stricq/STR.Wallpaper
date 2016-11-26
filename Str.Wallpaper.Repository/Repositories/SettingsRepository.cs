@@ -3,9 +3,12 @@ using System.ComponentModel.Composition;
 using System.IO;
 using System.Threading.Tasks;
 
+using AutoMapper;
+
 using Newtonsoft.Json;
 
 using Str.Wallpaper.Domain.Contracts;
+using Str.Wallpaper.Domain.Models;
 
 using Str.Wallpaper.Repository.Models.Settings;
 
@@ -14,23 +17,39 @@ namespace Str.Wallpaper.Repository.Repositories {
 
   [Export(typeof(IWindowSettingsRepository))]
   [Export(typeof(IProgramSettingsRepository))]
-  public sealed class SettingsRepository : IWindowSettingsRepository, IProgramSettingsRepository {
+  [Export(typeof(IUserSettingsRepository))]
+  public sealed class SettingsRepository : IWindowSettingsRepository, IProgramSettingsRepository, IUserSettingsRepository {
 
     #region Private Fields
 
+    private const string Secret = ";aoiuf6qe875PO&*HNWVYT.wf[l-0fl"; // AES
+
     private static readonly string programSettingsFile;
+    private static readonly string    userSettingsFile;
     private static readonly string windowSettingsFile;
+
+    private readonly ICryptoService cryptoService;
+
+    private readonly IMapper mapper;
 
     #endregion Private Fields
 
-    #region Constructor
+    #region Constructors
 
     static SettingsRepository() {
       programSettingsFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"STR Programming Services\STR.Wallpaper\ProgramSettings.json");
+         userSettingsFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"STR Programming Services\STR.Wallpaper\UserSettings.json");
       windowSettingsFile  = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"STR Programming Services\STR.Wallpaper\WindowSettings.json");
     }
 
-    #endregion Constructor
+    [ImportingConstructor]
+    public SettingsRepository(ICryptoService CryptoService, IMapper Mapper) {
+      cryptoService = CryptoService;
+
+      mapper = Mapper;
+    }
+
+    #endregion Constructors
 
     #region IWindowSettingsRepository Implementation
 
@@ -100,6 +119,35 @@ namespace Str.Wallpaper.Repository.Repositories {
     }
 
     #endregion IProgramSettingsRepository Implementation
+
+    #region IUserSettingsRepository Implementation
+
+    public async Task LoadUserSettingsAsync(DomainUserSettings Settings) {
+      if (await Task.Run(() => File.Exists(userSettingsFile))) {
+        UserSettings settings = await Task.Run(() => JsonConvert.DeserializeObject<UserSettings>(File.ReadAllText(userSettingsFile)));
+
+        settings.Password = cryptoService.DecryptStringAes(settings.Password, Secret, settings.NaCl);
+
+        mapper.Map(settings, Settings);
+      }
+    }
+
+    public async Task SaveUserSettingsAsync(DomainUserSettings Settings) {
+      UserSettings settings = mapper.Map<UserSettings>(Settings);
+
+      Tuple<string, string> saltHash = cryptoService.EncryptStringAes(settings.Password, Secret, settings.NaCl);
+
+      settings.NaCl     = saltHash.Item1;
+      settings.Password = saltHash.Item2;
+
+      string json = await Task.Run(() => JsonConvert.SerializeObject(settings, Formatting.Indented));
+
+      if (!await Task.Run(() => File.Exists(userSettingsFile))) await Task.Run(() => Directory.CreateDirectory(Path.GetDirectoryName(userSettingsFile)));
+
+      await Task.Run(() => File.WriteAllText(userSettingsFile, json));
+    }
+
+    #endregion IUserSettingsRepository Implementation
 
   }
 

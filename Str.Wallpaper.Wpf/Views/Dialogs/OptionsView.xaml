@@ -35,10 +35,10 @@
               </Grid.ColumnDefinitions>
 
               <Label   Grid.Row="0" Grid.Column="0" Content="Username:"   HorizontalAlignment="Right" Foreground="{StaticResource ForegroundColor}" />
-              <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Path=User.Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="200" HorizontalAlignment="Left" VerticalContentAlignment="Center" IsEnabled="{Binding Path=IsNotOnline}" />
+              <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Path=User.Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="200" HorizontalAlignment="Left" VerticalContentAlignment="Center" IsEnabled="{Binding Path=User.IsNotOnline}" />
 
               <Label   Grid.Row="2" Grid.Column="0" Content="Password:"   HorizontalAlignment="Right" Foreground="{StaticResource ForegroundColor}" />
-              <PasswordBox Grid.Row="2" Grid.Column="1" Width="200" HorizontalAlignment="Left" VerticalContentAlignment="Center" b:PasswordBoxBehaviors.Attach="True" b:PasswordBoxBehaviors.Password="{Binding Path=User.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontFamily="Segoe UI" IsEnabled="{Binding Path=IsNotOnline}" />
+              <PasswordBox Grid.Row="2" Grid.Column="1" Width="200" HorizontalAlignment="Left" VerticalContentAlignment="Center" b:PasswordBoxBehaviors.Attach="True" b:PasswordBoxBehaviors.Password="{Binding Path=User.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontFamily="Segoe UI" IsEnabled="{Binding Path=User.IsNotOnline}" />
 
               <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,6,0,0">
                 <Grid.ColumnDefinitions>
@@ -46,8 +46,8 @@
                   <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <Button Grid.Column="0" Content="Login"      Width="75" HorizontalAlignment="Left"  Command="{Binding Path=ServerLogin}" />
-                <Button Grid.Column="1" Content="Disconnect" Width="75" HorizontalAlignment="Right" Command="{Binding Path=ServerDisconnect}" />
+                <Button Grid.Column="0" Content="Login"      Width="75" HorizontalAlignment="Left"  Command="{Binding Path=ServerLogin}"      IsEnabled="{Binding Path=User.IsNotOnline}" />
+                <Button Grid.Column="1" Content="Disconnect" Width="75" HorizontalAlignment="Right" Command="{Binding Path=ServerDisconnect}" IsEnabled="{Binding Path=User.IsOnline}" />
 
               </Grid>
             </Grid>

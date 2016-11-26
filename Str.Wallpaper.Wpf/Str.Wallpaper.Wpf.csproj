@@ -57,8 +57,8 @@
     <StartupObject>Str.Wallpaper.Wpf.App</StartupObject>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AutoMapper, Version=5.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <HintPath>..\packages\AutoMapper.5.1.1\lib\net45\AutoMapper.dll</HintPath>
+    <Reference Include="AutoMapper, Version=5.2.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.5.2.0\lib\net45\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="FontAwesome.WPF, Version=4.5.0.37524, Culture=neutral, PublicKeyToken=0758b07a11a4f466, processorArchitecture=MSIL">
@@ -78,19 +78,19 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="STR.DialogView, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\STR.DialogView.1.0.15148.1\lib\net45\STR.DialogView.dll</HintPath>
+      <HintPath>..\packages\STR.DialogView.1.0.16327.3\lib\net45\STR.DialogView.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="STR.DialogView.Domain, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\STR.DialogView.1.0.15148.1\lib\net45\STR.DialogView.Domain.dll</HintPath>
+      <HintPath>..\packages\STR.DialogView.1.0.16327.3\lib\net45\STR.DialogView.Domain.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="STR.MvvmCommon, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\STR.MvvmCommon.Mef.1.0.16249.1\lib\net45\STR.MvvmCommon.dll</HintPath>
+      <HintPath>..\packages\STR.MvvmCommon.Mef.1.0.16327.2\lib\net45\STR.MvvmCommon.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="STR.MvvmCommon.Mef, Version=1.0.6092.20304, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\STR.MvvmCommon.Mef.1.0.16249.1\lib\net45\STR.MvvmCommon.Mef.dll</HintPath>
+    <Reference Include="STR.MvvmCommon.Mef, Version=1.0.6170.24160, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\STR.MvvmCommon.Mef.1.0.16327.2\lib\net45\STR.MvvmCommon.Mef.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -187,9 +187,11 @@
     <Compile Include="Converters\IsMouseOverMultiConverter.cs" />
     <Compile Include="Mapping\ViewEntityMappingConfiguration.cs" />
     <Compile Include="Messages\Application\ApplicationSettingsChangedMessage.cs" />
+    <Compile Include="Messages\Application\UserSettingsChangedMessage.cs" />
     <Compile Include="Messages\Status\StatusChangeWallpaperMessage.cs" />
     <Compile Include="Messages\Status\StatusTimerTickMessage.cs" />
     <Compile Include="ViewEntities\ProgramSettingsViewEntity.cs" />
+    <Compile Include="ViewEntities\UserSettingsViewEntity.cs" />
     <Compile Include="ViewEntities\WindowSettingsViewEntity.cs" />
     <Compile Include="ViewModels\Dialogs\OptionsViewModel.cs" />
     <Compile Include="ViewModels\MainMenuViewModel.cs" />

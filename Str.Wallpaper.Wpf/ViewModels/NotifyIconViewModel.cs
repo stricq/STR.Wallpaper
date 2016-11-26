@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.Composition;
+using System.Diagnostics.CodeAnalysis;
 
 using STR.MvvmCommon;
 
@@ -7,6 +8,8 @@ namespace Str.Wallpaper.Wpf.ViewModels {
 
   [Export]
   [ViewModel("NotifyIconViewModel")]
+  [SuppressMessage("ReSharper", "MemberCanBeInternal")]
+  [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
   public sealed class NotifyIconViewModel : ObservableObject {
 
     #region Private Fields

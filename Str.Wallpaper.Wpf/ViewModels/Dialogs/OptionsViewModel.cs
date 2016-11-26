@@ -19,12 +19,15 @@ namespace Str.Wallpaper.Wpf.ViewModels.Dialogs {
     #region Private Fields
 
     private RelayCommand selectCacheDirectory;
-
     private RelayCommand cancel;
 
     private RelayCommandAsync save;
+    private RelayCommandAsync serverLogin;
+    private RelayCommandAsync serverDisconnect;
 
     private ProgramSettingsViewEntity settings;
+
+    private UserSettingsViewEntity user;
 
     #endregion Private Fields
 
@@ -45,9 +48,24 @@ namespace Str.Wallpaper.Wpf.ViewModels.Dialogs {
       set { SetField(ref save, value, () => Save); }
     }
 
+    public RelayCommandAsync ServerLogin {
+      get { return serverLogin; }
+      set { SetField(ref serverLogin, value, () => ServerLogin); }
+    }
+
+    public RelayCommandAsync ServerDisconnect {
+      get { return serverDisconnect; }
+      set { SetField(ref serverDisconnect, value, () => ServerDisconnect); }
+    }
+
     public ProgramSettingsViewEntity Settings {
       get { return settings; }
       set { SetField(ref settings, value, () => Settings); }
+    }
+
+    public UserSettingsViewEntity User {
+      get { return user; }
+      set { SetField(ref user, value, () => User); }
     }
 
     #endregion Properties

@@ -8,7 +8,7 @@
              mvvm:ViewModelLocator.ComposedViewModel="NotifyIconViewModel"
              mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="300">
 
-  <tb:TaskbarIcon ToolTipText="{Binding Path=ToolTipText}" IconSource="/Str.Wallpaper.Wpf;component/Images/STR.WallpaperIcon16.ico" DoubleClickCommand="{Binding Path=DoubleClick}">
+  <tb:TaskbarIcon ToolTipText="{Binding Path=TooltipText}" IconSource="/Str.Wallpaper.Wpf;component/Images/STR.WallpaperIcon16.ico" DoubleClickCommand="{Binding Path=DoubleClick}">
     <tb:TaskbarIcon.ContextMenu>
       <ContextMenu>
         <MenuItem Header="Change Now" />

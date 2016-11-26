@@ -66,10 +66,18 @@ namespace Str.Wallpaper.Wpf.Controllers {
          mapper = Mapper;
 
       settingsRepository = SettingsRepository;
+    }
 
+    #endregion Constructor
+
+    #region IController Implementation
+
+    public int InitializePriority { get; } = 1000;
+
+    public async Task InitializeAsync() {
       iconViewModel.TooltipText = "STR Wallpaper v7";
 
-      viewModel.Settings = mapper.Map<WindowSettingsViewEntity>(Task.Run(() => settingsRepository.LoadWindowSettingsAsync()).Result);
+      viewModel.Settings = mapper.Map<WindowSettingsViewEntity>(await settingsRepository.LoadWindowSettingsAsync());
 
       if (viewModel.Settings.MainWindowState == WindowState.Minimized || viewModel.Settings.IsStartMinimized) {
         viewModel.Settings.MainWindowState = WindowState.Minimized;
@@ -87,7 +95,7 @@ namespace Str.Wallpaper.Wpf.Controllers {
       registerCommands();
     }
 
-    #endregion Constructor
+    #endregion IController Implementation
 
     #region Messages
 
