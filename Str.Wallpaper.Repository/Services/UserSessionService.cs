@@ -19,7 +19,7 @@ namespace Str.Wallpaper.Repository.Services {
 
     private const string AcceptJson = "application/json";
 
-    private const string RootUrl        = "https://api.stricq.com/StrWallpaper";
+    private const string RootUrl = "http://api.stricq.com/StrWallpaper";
 
     private const string Version        = "v1";
     private const string UserController = "User";

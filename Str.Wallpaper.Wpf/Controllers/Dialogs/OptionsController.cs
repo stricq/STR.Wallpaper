@@ -8,6 +8,7 @@ using Ookii.Dialogs.Wpf;
 
 using Str.Wallpaper.Domain.Contracts;
 using Str.Wallpaper.Domain.Models;
+
 using Str.Wallpaper.Repository.Models.Settings;
 
 using Str.Wallpaper.Wpf.Constants;
@@ -17,6 +18,7 @@ using Str.Wallpaper.Wpf.ViewModels;
 using Str.Wallpaper.Wpf.ViewModels.Dialogs;
 
 using STR.Common.Messages;
+
 using STR.DialogView.Domain.Messages;
 
 using STR.MvvmCommon;
@@ -66,6 +68,7 @@ namespace Str.Wallpaper.Wpf.Controllers.Dialogs {
     public int InitializePriority { get; } = 900;
 
     public async Task InitializeAsync() {
+      registerMessages();
       registerCommands();
 
       viewModel.Settings = mapper.Map<ProgramSettingsViewEntity>(await settingsRepository.LoadProgramSettingsAsync());
@@ -86,6 +89,18 @@ namespace Str.Wallpaper.Wpf.Controllers.Dialogs {
     }
 
     #endregion Constructor
+
+    #region Messages
+
+    private void registerMessages() {
+      messenger.Register<ApplicationClosingMessage>(this, onApplicationClosing);
+    }
+
+    private void onApplicationClosing(ApplicationClosingMessage message) {
+      Task.Run(() => userSettings.DisconnectAsync()).Wait();
+    }
+
+    #endregion Messages
 
     #region Commands
 
