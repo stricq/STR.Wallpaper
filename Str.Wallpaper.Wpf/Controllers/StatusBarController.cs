@@ -2,6 +2,7 @@
 using System.ComponentModel.Composition;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using System.Windows.Threading;
 
 using FontAwesome.WPF;
@@ -42,8 +43,17 @@ namespace Str.Wallpaper.Wpf.Controllers {
 
       messenger = Messenger;
 
+      viewModel.Icon            = FontAwesomeIcon.ExclamationTriangle;
+      viewModel.IconColor       = new SolidColorBrush(Colors.Maroon);
+      viewModel.JobProgressText = "Offline";
+      viewModel.NextChange      = TimeSpan.FromMinutes(15);
+
       timer = new DispatcherTimer();
     }
+
+    #endregion Constructor
+
+    #region IController Implementation
 
     public int InitializePriority { get; } = 100;
 
@@ -53,10 +63,6 @@ namespace Str.Wallpaper.Wpf.Controllers {
 
       timer.Start();
 
-      viewModel.Icon            = FontAwesomeIcon.Pause;
-      viewModel.JobProgressText = "Idle";
-      viewModel.NextChange      = TimeSpan.FromMinutes(15);
-
       changeMinutes = 15;
 
       registerMessages();
@@ -64,12 +70,14 @@ namespace Str.Wallpaper.Wpf.Controllers {
       return Task.CompletedTask;
     }
 
-    #endregion Constructor
+    #endregion IController Implementation
 
     #region Messages
 
     private void registerMessages() {
       messenger.Register<ApplicationSettingsChangedMessage>(this, onApplicationSettingsChanged);
+
+      messenger.Register<UserSettingsChangedMessage>(this, onUserSettingsChanged);
     }
 
     private void onApplicationSettingsChanged(ApplicationSettingsChangedMessage message) {
@@ -77,6 +85,29 @@ namespace Str.Wallpaper.Wpf.Controllers {
         changeMinutes = message.Settings.ChangeMinutes;
 
         viewModel.NextChange = TimeSpan.FromMinutes(changeMinutes);
+      }
+    }
+
+    private void onUserSettingsChanged(UserSettingsChangedMessage message) {
+      if (message.UserSettings.SessionId == null) {
+        if (message.UserSettings.IsLoggingIn) {
+          viewModel.Icon            = FontAwesomeIcon.Spinner;
+          viewModel.IconColor       = new SolidColorBrush(Colors.Yellow);
+          viewModel.Spin            = true;
+          viewModel.JobProgressText = "Logging In";
+        }
+        else {
+          viewModel.Icon            = FontAwesomeIcon.ExclamationTriangle;
+          viewModel.IconColor       = new SolidColorBrush(Colors.Maroon);
+          viewModel.Spin            = false;
+          viewModel.JobProgressText = "Offline";
+        }
+      }
+      else {
+        viewModel.Icon            = FontAwesomeIcon.Pause;
+        viewModel.IconColor       = new SolidColorBrush(Colors.White);
+        viewModel.Spin            = false;
+        viewModel.JobProgressText = "Idle";
       }
     }
 

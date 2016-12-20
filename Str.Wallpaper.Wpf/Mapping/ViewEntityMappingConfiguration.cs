@@ -43,7 +43,8 @@ namespace Str.Wallpaper.Wpf.Mapping {
                                                                     .ForMember(dest => dest.IsNotOnline,        opt => opt.Ignore())
                                                                     .ForMember(dest => dest.AreSettingsChanged, opt => opt.Ignore());
 
-      config.CreateMap<UserSettingsViewEntity, DomainUserSettings>().ForMember(dest => dest.SessionId, opt => opt.Ignore());
+      config.CreateMap<UserSettingsViewEntity, DomainUserSettings>().ForMember(dest => dest.SessionId,   opt => opt.Ignore())
+                                                                    .ForMember(dest => dest.IsLoggingIn, opt => opt.Ignore());
     }
 
     #endregion Private Methods

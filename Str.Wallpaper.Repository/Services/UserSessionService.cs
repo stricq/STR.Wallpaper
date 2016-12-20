@@ -7,6 +7,7 @@ using RestSharp;
 
 using Str.Wallpaper.Domain.Contracts;
 using Str.Wallpaper.Domain.Models;
+
 using Str.Wallpaper.Repository.Models.User;
 
 
@@ -85,6 +86,18 @@ namespace Str.Wallpaper.Repository.Services {
       RestRequest request = createRequest($"{ServicePath}/{{sessionId}}", Method.PUT);
 
       request.AddUrlSegment("sessionId", UserSettings.SessionId.Value.ToString("D"));
+
+      IRestResponse<UserSessionResponse> response = await Client.ExecuteTaskAsync<UserSessionResponse>(request);
+
+      return response.StatusCode == HttpStatusCode.OK;
+    }
+
+    public async Task<bool> ChangePassword(DomainUserSettings UserSettings, string newPassword) {
+      RestRequest request = createRequest($"{ServicePath}/{{username}}/{{oldPassword}}/{{newPassword}}", Method.POST);
+
+      request.AddUrlSegment("username",    UserSettings.Username);
+      request.AddUrlSegment("oldPassword", UserSettings.Password);
+      request.AddUrlSegment("newPassword", newPassword);
 
       IRestResponse<UserSessionResponse> response = await Client.ExecuteTaskAsync<UserSessionResponse>(request);
 

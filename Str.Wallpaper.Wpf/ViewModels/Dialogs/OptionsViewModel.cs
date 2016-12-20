@@ -24,6 +24,8 @@ namespace Str.Wallpaper.Wpf.ViewModels.Dialogs {
     private RelayCommandAsync save;
     private RelayCommandAsync serverLogin;
     private RelayCommandAsync serverDisconnect;
+    private RelayCommandAsync createAccount;
+    private RelayCommandAsync changePassword;
 
     private ProgramSettingsViewEntity settings;
 
@@ -56,6 +58,16 @@ namespace Str.Wallpaper.Wpf.ViewModels.Dialogs {
     public RelayCommandAsync ServerDisconnect {
       get { return serverDisconnect; }
       set { SetField(ref serverDisconnect, value, () => ServerDisconnect); }
+    }
+
+    public RelayCommandAsync CreateAccount {
+      get { return createAccount; }
+      set { SetField(ref createAccount, value, () => CreateAccount); }
+    }
+
+    public RelayCommandAsync ChangePassword {
+      get { return changePassword; }
+      set { SetField(ref changePassword, value, () => ChangePassword); }
     }
 
     public ProgramSettingsViewEntity Settings {

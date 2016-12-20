@@ -31,7 +31,7 @@
 
     <StatusBarItem Grid.Column="0" Name="Icon" Width="18">
       <StackPanel Orientation="Vertical">
-        <fa:ImageAwesome Icon="{Binding Path=Icon}" Spin="{Binding Path=Spin}" Foreground="White" />
+        <fa:ImageAwesome Icon="{Binding Path=Icon}" Spin="{Binding Path=Spin}" Foreground="{Binding Path=IconColor}" />
 
         <Popup PlacementTarget="{Binding ElementName=Icon}" Placement="Top" VerticalOffset="2">
           <Popup.IsOpen>
@@ -63,7 +63,7 @@
     <Separator Grid.Column="5" />
 
     <StatusBarItem Grid.Column="6">
-      <TextBlock Text="{Binding Path=Memory, StringFormat=Memory: {0:N1}MB}" Margin="0" Foreground="White" />
+      <TextBlock Text="{Binding Path=Memory, StringFormat='Memory: {0:N1}MB'}" Margin="0" Foreground="White" />
     </StatusBarItem>
 
     <Separator Grid.Column="7" />

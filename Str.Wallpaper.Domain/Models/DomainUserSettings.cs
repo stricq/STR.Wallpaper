@@ -38,6 +38,8 @@ namespace Str.Wallpaper.Domain.Models {
 
     #region Domain Properties
 
+    public bool IsLoggingIn { get; set; }
+
     public Guid? SessionId { get; set; }
 
     #endregion Domain Properties

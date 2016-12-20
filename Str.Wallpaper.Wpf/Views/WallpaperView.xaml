@@ -52,10 +52,14 @@
             <Style TargetType="TabItem" BasedOn="{StaticResource TabItemStyle}" />
           </TabControl.Resources>
 
-          <TabItem Header="Wallpaper Preview">
+          <TabItem Header="Collections">
+            <v:CollectionsView />
           </TabItem>
 
-          <TabItem Header="Collections">
+          <TabItem Header="Image Preview">
+          </TabItem>
+
+          <TabItem Header="Wallpaper Preview">
           </TabItem>
 
         </TabControl>

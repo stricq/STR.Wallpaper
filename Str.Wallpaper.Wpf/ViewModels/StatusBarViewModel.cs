@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.Composition;
 using System.Diagnostics.CodeAnalysis;
+using System.Windows.Media;
 
 using FontAwesome.WPF;
 
@@ -23,6 +24,8 @@ namespace Str.Wallpaper.Wpf.ViewModels {
 
     private string jobProgressText;
     private string      statusText;
+
+    private SolidColorBrush iconColor;
 
     private FontAwesomeIcon icon;
 
@@ -50,6 +53,11 @@ namespace Str.Wallpaper.Wpf.ViewModels {
     public string StatusText {
       get { return statusText; }
       set { SetField(ref statusText, value, () => StatusText); }
+    }
+
+    public SolidColorBrush IconColor {
+      get { return iconColor; }
+      set { SetField(ref iconColor, value, () => IconColor); }
     }
 
     public FontAwesomeIcon Icon {

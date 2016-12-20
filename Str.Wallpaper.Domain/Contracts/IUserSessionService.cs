@@ -14,6 +14,8 @@ namespace Str.Wallpaper.Domain.Contracts {
 
     Task<bool> DisconnectAsync(DomainUserSettings UserSettings);
 
+    Task<bool> ChangePassword(DomainUserSettings UserSettings, string newPassword);
+
   }
 
 }

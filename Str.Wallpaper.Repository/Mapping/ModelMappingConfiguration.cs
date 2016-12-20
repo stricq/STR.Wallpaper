@@ -16,7 +16,8 @@ namespace Str.Wallpaper.Repository.Mapping {
     #region IAutoMapperConfiguration Implementation
 
     public void RegisterMappings(IMapperConfigurationExpression config) {
-      config.CreateMap<UserSettings, DomainUserSettings>().ForMember(dest => dest.SessionId, opt => opt.Ignore())
+      config.CreateMap<UserSettings, DomainUserSettings>().ForMember(dest => dest.SessionId,   opt => opt.Ignore())
+                                                          .ForMember(dest => dest.IsLoggingIn, opt => opt.Ignore())
                                                           .ReverseMap();
     }
 
