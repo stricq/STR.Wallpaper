@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel.Composition;
+﻿using System.ComponentModel.Composition;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -8,47 +7,40 @@ using RestSharp;
 using Str.Wallpaper.Domain.Contracts;
 using Str.Wallpaper.Domain.Models;
 
-using Str.Wallpaper.Repository.Models.User;
+using Str.Wallpaper.Repository.Models.Dtos;
 
 
 namespace Str.Wallpaper.Repository.Services {
 
   [Export(typeof(IUserSessionService))]
-  public sealed class UserSessionService : IUserSessionService {
+  public sealed class UserSessionService : ServiceBase, IUserSessionService {
 
     #region Private Fields
 
-    private const string AcceptJson = "application/json";
-
-    private const string RootUrl = "http://api.stricq.com/StrWallpaper";
-
-    private const string Version        = "v1";
-    private const string UserController = "User";
+    private const string Version    = "v1";
+    private const string Controller = "User";
 
     private static readonly string ServicePath;
-
-    [ThreadStatic]
-    private static IRestClient client;
 
     #endregion Private Fields
 
     #region Static Constructor
 
     static UserSessionService() {
-      ServicePath = $"/{Version}/{UserController}";
+      ServicePath = $"/{Version}/{Controller}";
     }
 
     #endregion Static Constructor
 
     #region IUserSessionService Implementation
 
-    public async Task<bool> CreateUserAsync(DomainUserSettings UserSettings) {
-      RestRequest request = createRequest($"{ServicePath}/{{username}}/{{password}}", Method.POST);
+    public async Task<bool> CreateUserAsync(DomainUser UserSettings) {
+      RestRequest request = CreateRequest($"{ServicePath}/{{username}}/{{password}}", Method.POST);
 
       request.AddUrlSegment("username", UserSettings.Username);
       request.AddUrlSegment("password", UserSettings.Password);
 
-      IRestResponse<UserSessionResponse> response = await Client.ExecuteTaskAsync<UserSessionResponse>(request);
+      IRestResponse<UserDto> response = await Client.ExecuteTaskAsync<UserDto>(request);
 
       if (response.StatusCode == HttpStatusCode.Conflict) {
         UserSettings.SessionId = null;
@@ -56,18 +48,21 @@ namespace Str.Wallpaper.Repository.Services {
         return false;
       }
 
-      UserSettings.SessionId = handleError(response).SessionId;
+      UserDto user = HandleError(response);
+
+      UserSettings.Id        = user.Id;
+      UserSettings.SessionId = user.SessionId;
 
       return true;
     }
 
-    public async Task<bool> LoginAsync(DomainUserSettings UserSettings) {
-      RestRequest request = createRequest($"{ServicePath}/{{username}}/{{password}}", Method.PUT);
+    public async Task<bool> LoginAsync(DomainUser UserSettings) {
+      RestRequest request = CreateRequest($"{ServicePath}/{{username}}/{{password}}", Method.GET);
 
       request.AddUrlSegment("username", UserSettings.Username);
       request.AddUrlSegment("password", UserSettings.Password);
 
-      IRestResponse<UserSessionResponse> response = await Client.ExecuteTaskAsync<UserSessionResponse>(request);
+      IRestResponse<UserDto> response = await Client.ExecuteTaskAsync<UserDto>(request);
 
       if (response.StatusCode == HttpStatusCode.NotFound) {
         UserSettings.SessionId = null;
@@ -75,71 +70,39 @@ namespace Str.Wallpaper.Repository.Services {
         return false;
       }
 
-      UserSettings.SessionId = handleError(response).SessionId;
+      UserDto user = HandleError(response);
+
+      UserSettings.Id        = user.Id;
+      UserSettings.SessionId = user.SessionId;
 
       return true;
     }
 
-    public async Task<bool> DisconnectAsync(DomainUserSettings UserSettings) {
+    public async Task<bool> DisconnectAsync(DomainUser UserSettings) {
       if (UserSettings.SessionId == null) return true;
 
-      RestRequest request = createRequest($"{ServicePath}/{{sessionId}}", Method.PUT);
+      RestRequest request = CreateRequest($"{ServicePath}/{{sessionId}}", Method.DELETE);
 
       request.AddUrlSegment("sessionId", UserSettings.SessionId.Value.ToString("D"));
 
-      IRestResponse<UserSessionResponse> response = await Client.ExecuteTaskAsync<UserSessionResponse>(request);
+      IRestResponse<ServiceResponseBase> response = await Client.ExecuteTaskAsync<ServiceResponseBase>(request);
 
       return response.StatusCode == HttpStatusCode.OK;
     }
 
-    public async Task<bool> ChangePassword(DomainUserSettings UserSettings, string newPassword) {
-      RestRequest request = createRequest($"{ServicePath}/{{username}}/{{oldPassword}}/{{newPassword}}", Method.POST);
+    public async Task<bool> ChangePassword(DomainUser UserSettings, string newPassword) {
+      RestRequest request = CreateRequest($"{ServicePath}/{{username}}/{{oldPassword}}/{{newPassword}}", Method.PATCH);
 
       request.AddUrlSegment("username",    UserSettings.Username);
       request.AddUrlSegment("oldPassword", UserSettings.Password);
       request.AddUrlSegment("newPassword", newPassword);
 
-      IRestResponse<UserSessionResponse> response = await Client.ExecuteTaskAsync<UserSessionResponse>(request);
+      IRestResponse<ServiceResponseBase> response = await Client.ExecuteTaskAsync<ServiceResponseBase>(request);
 
       return response.StatusCode == HttpStatusCode.OK;
     }
 
     #endregion IUserSessionService Implementation
-
-    #region Private Methods
-
-    private static IRestClient Client {
-      get {
-        if (client != null) return client;
-
-        client = new RestClient(RootUrl);
-
-        return client;
-      }
-    }
-
-    private static RestRequest createRequest(string path, Method method) {
-      RestRequest request = new RestRequest(path, method) { RequestFormat = DataFormat.Json };
-
-      request.AddHeader(HttpRequestHeader.Accept.ToString(), AcceptJson);
-
-      return request;
-    }
-
-    private static T handleError<T>(IRestResponse<T> response) where T : new() {
-      if (response.StatusCode == HttpStatusCode.OK) return response.Data;
-
-      switch(response.StatusCode) {
-        case HttpStatusCode.NotFound: {
-          return new T();
-        }
-        default: {
-          throw new Exception($"Session Service Error ({response.StatusCode}).");
-        }
-      }
-    }
-
-    #endregion Private Methods
 
   }
 

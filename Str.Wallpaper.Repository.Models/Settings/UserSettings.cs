@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 
 namespace Str.Wallpaper.Repository.Models.Settings {
@@ -11,6 +12,8 @@ namespace Str.Wallpaper.Repository.Models.Settings {
     public string Password { get; set; }
 
     public string NaCl { get; set; }
+
+    public List<string> SelectedCollections { get; set; }
 
   }
 

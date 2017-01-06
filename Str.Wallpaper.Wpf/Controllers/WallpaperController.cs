@@ -125,7 +125,7 @@ namespace Str.Wallpaper.Wpf.Controllers {
       viewModel.SizeChanged = new RelayCommand<SizeChangedEventArgs>(onSizeChanged);
 
       viewModel.Initialized = new RelayCommand<EventArgs>(onInitialized);
-      viewModel.Loaded      = new RelayCommand<RoutedEventArgs>(onLoaded);
+      viewModel.Loaded      = new RelayCommandAsync<RoutedEventArgs>(onLoaded);
       viewModel.Closing     = new RelayCommand<CancelEventArgs>(onClosing);
 
       menuViewModel.Exit = new RelayCommand(onExit);
@@ -144,14 +144,14 @@ namespace Str.Wallpaper.Wpf.Controllers {
       messenger.Send(new ApplicationInitializedMessage());
     }
 
-    private void onLoaded(RoutedEventArgs args) {
-      messenger.Send(new ApplicationLoadedMessage());
+    private async Task onLoaded(RoutedEventArgs args) {
+      await messenger.SendAsync(new ApplicationLoadedMessage());
     }
 
     private void onClosing(CancelEventArgs args) {
       ApplicationClosingMessage message = new ApplicationClosingMessage();
 
-      messenger.Send(message);
+      Task.Run(() => messenger.SendAsync(message)).Wait();
 
       if (!message.Cancel && viewModel.Settings.AreSettingsChanged) Task.Run(saveSettings).Wait();
 

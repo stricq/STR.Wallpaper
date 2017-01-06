@@ -46,12 +46,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contracts\IAutoMapperConfiguration.cs" />
+    <Compile Include="Contracts\ICollectionService.cs" />
     <Compile Include="Contracts\ICryptoService.cs" />
     <Compile Include="Contracts\IProgramSettingsRepository.cs" />
     <Compile Include="Contracts\IUserSessionService.cs" />
     <Compile Include="Contracts\IUserSettingsRepository.cs" />
     <Compile Include="Contracts\IWindowSettingsRepository.cs" />
-    <Compile Include="Models\DomainUserSettings.cs" />
+    <Compile Include="Models\DomainCollection.cs" />
+    <Compile Include="Models\DomainUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CryptoService.cs" />
   </ItemGroup>

@@ -7,9 +7,9 @@ namespace Str.Wallpaper.Domain.Contracts {
 
   public interface IUserSettingsRepository {
 
-    Task LoadUserSettingsAsync(DomainUserSettings Settings);
+    Task LoadUserSettingsAsync(DomainUser Settings);
 
-    Task SaveUserSettingsAsync(DomainUserSettings Settings);
+    Task SaveUserSettingsAsync(DomainUser Settings);
 
   }
 

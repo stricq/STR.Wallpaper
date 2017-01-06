@@ -41,10 +41,10 @@
 
               <Button Grid.Row="0" Grid.Column="3" Content="Create Account" Width="120" Command="{Binding Path=CreateAccount}" IsEnabled="{Binding Path=User.IsNotOnline}" />
 
-              <Label   Grid.Row="2" Grid.Column="0" Content="Password:"   HorizontalAlignment="Right" Foreground="{StaticResource ForegroundColor}" />
+              <Label       Grid.Row="2" Grid.Column="0" Content="Password:" HorizontalAlignment="Right" Foreground="{StaticResource ForegroundColor}" />
               <PasswordBox Grid.Row="2" Grid.Column="1" Width="200" HorizontalAlignment="Left" VerticalContentAlignment="Center" b:PasswordBoxBehaviors.Attach="True" b:PasswordBoxBehaviors.Password="{Binding Path=User.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontFamily="Segoe UI" IsEnabled="{Binding Path=User.IsNotOnline}" />
 
-              <Button Grid.Row="2" Grid.Column="3" Content="Change Password" Width="120" Command="{Binding Path=ChangePassword}" />
+              <Button Grid.Row="2" Grid.Column="3" Content="Change Password" Width="120" Command="{Binding Path=ChangePassword}" Visibility="Collapsed" />
 
               <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,6,0,0">
                 <Grid.ColumnDefinitions>

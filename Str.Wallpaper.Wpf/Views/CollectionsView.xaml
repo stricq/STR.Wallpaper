@@ -23,20 +23,13 @@
                 dd:DragDrop.IsDropTarget="True" dd:DragDrop.DropHandler="{Binding Path=DropTarget}">
         <ListView.View>
           <GridView>
-            <GridViewColumn Header="Owner"           DisplayMemberBinding="{Binding Path=Owner}" />
+            <GridViewColumn Header="Owner"           DisplayMemberBinding="{Binding Path=OwnerName}" />
             <GridViewColumn Header="Collection Name" DisplayMemberBinding="{Binding Path=Name}" />
             <GridViewColumn Header="Status"          DisplayMemberBinding="{Binding Path=Status}" />
             <GridViewColumn Header="Wallpapers">
               <GridViewColumn.CellTemplate>
                 <DataTemplate>
-                  <TextBlock Text="{Binding Path=WallpaperCount, StringFormat={}{0:N0}}" TextAlignment="Right" />
-                </DataTemplate>
-              </GridViewColumn.CellTemplate>
-            </GridViewColumn>
-            <GridViewColumn Header="Rating">
-              <GridViewColumn.CellTemplate>
-                <DataTemplate>
-                  <TextBlock Text="{Binding Path=Rating, StringFormat={}{0:N0}}" TextAlignment="Right" />
+                  <TextBlock Text="{Binding Path=TotalWallpapers, StringFormat={}{0:N0}}" TextAlignment="Right" />
                 </DataTemplate>
               </GridViewColumn.CellTemplate>
             </GridViewColumn>

@@ -33,7 +33,7 @@ namespace Str.Wallpaper.Wpf.Controllers.Dialogs {
 
     #region Private Fields
 
-    private DomainUserSettings userSettings;
+    private DomainUser userSettings;
 
     private ProgramSettingsViewEntity settingsBackup;
 
@@ -82,7 +82,7 @@ namespace Str.Wallpaper.Wpf.Controllers.Dialogs {
 
       messenger.Send(new ApplicationSettingsChangedMessage { Settings = viewModel.Settings });
 
-      userSettings = new DomainUserSettings(userRepository, sessionService);
+      userSettings = new DomainUser(userRepository, sessionService);
 
       await userSettings.LoadUserSettingsAsync();
 
@@ -114,11 +114,11 @@ namespace Str.Wallpaper.Wpf.Controllers.Dialogs {
     #region Messages
 
     private void registerMessages() {
-      messenger.Register<ApplicationClosingMessage>(this, onApplicationClosing);
+      messenger.RegisterAsync<ApplicationClosingMessage>(this, onApplicationClosing);
     }
 
-    private void onApplicationClosing(ApplicationClosingMessage message) {
-      Task.Run(() => userSettings.DisconnectAsync()).Wait();
+    private async Task onApplicationClosing(ApplicationClosingMessage message) {
+      await userSettings.DisconnectAsync();
     }
 
     #endregion Messages

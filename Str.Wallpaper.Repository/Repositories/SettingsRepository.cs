@@ -122,7 +122,7 @@ namespace Str.Wallpaper.Repository.Repositories {
 
     #region IUserSettingsRepository Implementation
 
-    public async Task LoadUserSettingsAsync(DomainUserSettings Settings) {
+    public async Task LoadUserSettingsAsync(DomainUser Settings) {
       if (await Task.Run(() => File.Exists(userSettingsFile))) {
         UserSettings settings = await Task.Run(() => JsonConvert.DeserializeObject<UserSettings>(File.ReadAllText(userSettingsFile)));
 
@@ -132,7 +132,7 @@ namespace Str.Wallpaper.Repository.Repositories {
       }
     }
 
-    public async Task SaveUserSettingsAsync(DomainUserSettings Settings) {
+    public async Task SaveUserSettingsAsync(DomainUser Settings) {
       UserSettings settings = mapper.Map<UserSettings>(Settings);
 
       Tuple<string, string> saltHash = cryptoService.EncryptStringAes(settings.Password, Secret, settings.NaCl);

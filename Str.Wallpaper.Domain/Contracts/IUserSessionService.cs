@@ -8,13 +8,13 @@ namespace Str.Wallpaper.Domain.Contracts {
 
   public interface IUserSessionService {
 
-    Task<bool> CreateUserAsync(DomainUserSettings UserSettings);
+    Task<bool> CreateUserAsync(DomainUser UserSettings);
 
-    Task<bool> LoginAsync(DomainUserSettings UserSettings);
+    Task<bool> LoginAsync(DomainUser UserSettings);
 
-    Task<bool> DisconnectAsync(DomainUserSettings UserSettings);
+    Task<bool> DisconnectAsync(DomainUser UserSettings);
 
-    Task<bool> ChangePassword(DomainUserSettings UserSettings, string newPassword);
+    Task<bool> ChangePassword(DomainUser UserSettings, string newPassword);
 
   }
 

@@ -31,7 +31,7 @@ namespace Str.Wallpaper.Wpf.ViewModels {
 
     private RelayCommand<EventArgs> initialized;
 
-    private RelayCommand<RoutedEventArgs> loaded;
+    private RelayCommandAsync<RoutedEventArgs> loaded;
 
     private RelayCommand<CancelEventArgs> closing;
 
@@ -78,7 +78,7 @@ namespace Str.Wallpaper.Wpf.ViewModels {
       set { SetField(ref initialized, value, () => Initialized); }
     }
 
-    public RelayCommand<RoutedEventArgs> Loaded {
+    public RelayCommandAsync<RoutedEventArgs> Loaded {
       get { return loaded; }
       set { SetField(ref loaded, value, () => Loaded); }
     }

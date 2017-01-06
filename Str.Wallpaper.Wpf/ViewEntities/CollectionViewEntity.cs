@@ -17,12 +17,10 @@ namespace Str.Wallpaper.Wpf.ViewEntities {
     private bool isActive;
     private bool isContextMenuOpen;
 
-    private byte rating;
-
-    private int wallpaperCount;
+    private int totalWallpapers;
 
     private string name;
-    private string owner;
+    private string ownerName;
 
     private RelayCommand<ContextMenuEventArgs> contextMenuOpening;
 
@@ -50,14 +48,9 @@ namespace Str.Wallpaper.Wpf.ViewEntities {
       set { SetField(ref isPublic, value, () => IsPublic, () => Status); }
     }
 
-    public byte Rating {
-      get { return rating; }
-      set { SetField(ref rating, value, () => Rating); }
-    }
-
-    public int WallpaperCount {
-      get { return wallpaperCount; }
-      set { SetField(ref wallpaperCount, value, () => WallpaperCount); }
+    public int TotalWallpapers {
+      get { return totalWallpapers; }
+      set { SetField(ref totalWallpapers, value, () => TotalWallpapers); }
     }
 
     public string Name {
@@ -65,9 +58,9 @@ namespace Str.Wallpaper.Wpf.ViewEntities {
       set { SetField(ref name, value, () => Name); }
     }
 
-    public string Owner {
-      get { return owner; }
-      set { SetField(ref owner, value, () => Owner); }
+    public string OwnerName {
+      get { return ownerName; }
+      set { SetField(ref ownerName, value, () => OwnerName); }
     }
 
     public string Status => isPublic ? "Public" : "Private";
@@ -76,6 +69,8 @@ namespace Str.Wallpaper.Wpf.ViewEntities {
       get { return contextMenuOpening; }
       set { SetField(ref contextMenuOpening, value, () => ContextMenuOpening); }
     }
+
+    public string Id { get; set; }
 
     #endregion Properties
 
