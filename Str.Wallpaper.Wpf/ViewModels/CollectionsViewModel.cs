@@ -13,7 +13,7 @@ using STR.MvvmCommon;
 namespace Str.Wallpaper.Wpf.ViewModels {
 
   [Export]
-  [ViewModel("CollectionsViewModel")]
+  [ViewModel(nameof(CollectionsViewModel))]
   [SuppressMessage("ReSharper", "MemberCanBeInternal")]
   [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
   public sealed class CollectionsViewModel : ObservableObject {
@@ -27,9 +27,9 @@ namespace Str.Wallpaper.Wpf.ViewModels {
 
     private ObservableCollection<CollectionViewEntity> collections;
 
-    private RelayCommand    addCollection;
-    private RelayCommand   editCollection;
-    private RelayCommand deleteCollection;
+    private RelayCommandAsync    addCollection;
+    private RelayCommandAsync   editCollection;
+    private RelayCommandAsync deleteCollection;
 
     private RelayCommand<ContextMenuEventArgs> contextMenuOpening;
     private RelayCommand<ContextMenuEventArgs> contextMenuClosing;
@@ -40,17 +40,17 @@ namespace Str.Wallpaper.Wpf.ViewModels {
 
     #region Properties
 
-    public RelayCommand AddCollection {
+    public RelayCommandAsync AddCollection {
       get { return addCollection; }
       set { SetField(ref addCollection, value, () => AddCollection); }
     }
 
-    public RelayCommand EditCollection {
+    public RelayCommandAsync EditCollection {
       get { return editCollection; }
       set { SetField(ref editCollection, value, () => EditCollection); }
     }
 
-    public RelayCommand DeleteCollection {
+    public RelayCommandAsync DeleteCollection {
       get { return deleteCollection; }
       set { SetField(ref deleteCollection, value, () => DeleteCollection); }
     }

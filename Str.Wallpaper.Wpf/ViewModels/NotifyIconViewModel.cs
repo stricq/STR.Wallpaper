@@ -7,7 +7,7 @@ using STR.MvvmCommon;
 namespace Str.Wallpaper.Wpf.ViewModels {
 
   [Export]
-  [ViewModel("NotifyIconViewModel")]
+  [ViewModel(nameof(NotifyIconViewModel))]
   [SuppressMessage("ReSharper", "MemberCanBeInternal")]
   [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
   public sealed class NotifyIconViewModel : ObservableObject {

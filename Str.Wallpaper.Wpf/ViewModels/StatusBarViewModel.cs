@@ -11,7 +11,7 @@ using STR.MvvmCommon;
 namespace Str.Wallpaper.Wpf.ViewModels {
 
   [Export]
-  [ViewModel("StatusBarViewModel")]
+  [ViewModel(nameof(StatusBarViewModel))]
   [SuppressMessage("ReSharper", "MemberCanBeInternal")]
   [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
   public sealed class StatusBarViewModel : ObservableObject {

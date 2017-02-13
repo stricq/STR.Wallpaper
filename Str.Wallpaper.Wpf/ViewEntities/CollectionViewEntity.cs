@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Windows.Controls;
 
 using STR.MvvmCommon;
@@ -8,7 +9,7 @@ namespace Str.Wallpaper.Wpf.ViewEntities {
 
   [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
   [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
-  public class CollectionViewEntity : ObservableObject {
+  public class CollectionViewEntity : ObservableObject, IComparable<CollectionViewEntity> {
 
     #region Private Fields
 
@@ -73,6 +74,20 @@ namespace Str.Wallpaper.Wpf.ViewEntities {
     public string Id { get; set; }
 
     #endregion Properties
+
+    #region IComparable Implementation
+
+    public int CompareTo(CollectionViewEntity other) {
+      if (other == null) return 1;
+
+      int compared = String.Compare(OwnerName, other.OwnerName, StringComparison.OrdinalIgnoreCase);
+
+      if (compared == 0) compared = String.Compare(Name, other.Name, StringComparison.OrdinalIgnoreCase);
+
+      return compared;
+    }
+
+    #endregion IComparable Implementation
 
   }
 

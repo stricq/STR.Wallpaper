@@ -276,7 +276,7 @@ namespace Str.Wallpaper.Wpf.Controllers.Dialogs {
 
     #region ChangePassword Command
 
-    private async Task onChangePasswordExecute() {
+    private static async Task onChangePasswordExecute() {
       await Task.CompletedTask;
     }
 

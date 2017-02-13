@@ -11,7 +11,7 @@ using STR.MvvmCommon;
 namespace Str.Wallpaper.Wpf.ViewModels.Dialogs {
 
   [Export]
-  [ViewModel("OptionsViewModel")]
+  [ViewModel(nameof(OptionsViewModel))]
   [SuppressMessage("ReSharper", "MemberCanBeInternal")]
   [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
   public sealed class OptionsViewModel : ObservableObject, IDialogViewModel {

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
@@ -11,6 +12,7 @@ using Str.Wallpaper.Domain.Contracts;
 using Str.Wallpaper.Domain.Models;
 
 using Str.Wallpaper.Wpf.Messages.Application;
+using Str.Wallpaper.Wpf.Messages.Collections;
 using Str.Wallpaper.Wpf.Messages.Folders;
 using Str.Wallpaper.Wpf.ViewEntities;
 using Str.Wallpaper.Wpf.ViewModels;
@@ -18,6 +20,9 @@ using Str.Wallpaper.Wpf.ViewModels;
 using STR.Common.Extensions;
 using STR.Common.Messages;
 
+using STR.DialogView.Domain.Messages;
+
+using STR.MvvmCommon;
 using STR.MvvmCommon.Contracts;
 
 
@@ -28,11 +33,14 @@ namespace Str.Wallpaper.Wpf.Controllers {
 
     #region Private Fields
 
+    private bool isLongRunningTask;
+
     private DomainUser user;
 
     private List<DomainCollection> collections;
 
-    private readonly CollectionsViewModel viewModel;
+    private readonly CollectionsViewModel  viewModel;
+    private readonly MainMenuViewModel menuViewModel;
 
     private readonly IMessenger messenger;
     private readonly IMapper    mapper;
@@ -44,8 +52,9 @@ namespace Str.Wallpaper.Wpf.Controllers {
     #region Constructor
 
     [ImportingConstructor]
-    public CollectionsController(CollectionsViewModel ViewModel, IMessenger Messenger, IMapper Mapper, ICollectionService CollectionService) {
-      viewModel = ViewModel;
+    public CollectionsController(CollectionsViewModel ViewModel, MainMenuViewModel MenuViewModel, IMessenger Messenger, IMapper Mapper, ICollectionService CollectionService) {
+          viewModel = ViewModel;
+      menuViewModel = MenuViewModel;
 
       viewModel.Collections = new ObservableCollection<CollectionViewEntity>();
 
@@ -65,6 +74,7 @@ namespace Str.Wallpaper.Wpf.Controllers {
 
     public async Task InitializeAsync() {
       registerMessages();
+      registerCommands();
 
       await Task.CompletedTask;
     }
@@ -90,6 +100,26 @@ namespace Str.Wallpaper.Wpf.Controllers {
     }
 
     #endregion Messages
+
+    #region Commands
+
+    private void registerCommands() {
+      viewModel.AddCollection = new RelayCommandAsync(onAddCollectionExecuteAsync, canAddCollectionExecute);
+    }
+
+    #region AddCollection Command
+
+    private bool canAddCollectionExecute() {
+      return user.IsOnline && !isLongRunningTask;
+    }
+
+    private async Task onAddCollectionExecuteAsync() {
+      await messenger.SendAsync(new CollectionEditMessage { Collection = new DomainCollection(), Title = "Add New Collection", CallbackAsync = onAddCollectionResponseAsync });
+    }
+
+    #endregion AddCollection Command
+
+    #endregion Commands
 
     #region Private Methods
 
@@ -146,6 +176,38 @@ namespace Str.Wallpaper.Wpf.Controllers {
       user.AreSettingsChanged  = true;
 
       await messenger.SendAsync(new CollectionsChangedMessage { Collections = selectedCollections });
+    }
+
+    private async Task onAddCollectionResponseAsync(CollectionEditMessage message) {
+      if (message.IsCancel) return;
+
+      if (String.IsNullOrEmpty(message.Collection.Name)) {
+        messenger.Send(new MessageBoxDialogMessage { Header = "Missing Name", Message = "Please enter a Collection name.", HasCancel = false });
+
+        return;
+      }
+
+      if (collections.Any(collection => collection.OwnerId == user.Id && collection.Name == message.Collection.Name)) {
+        messenger.Send(new MessageBoxDialogMessage { Header = "Duplicate Name", Message = "A collection already exists with that name.", HasCancel = false });
+
+        return;
+      }
+
+      message.Collection.OwnerId   = user.Id;
+      message.Collection.OwnerName = user.Username;
+      message.Collection.Created   = DateTime.Now;
+
+      await collectionService.SaveCollectionAsync(user, message.Collection);
+
+      CollectionViewEntity viewEntity = mapper.Map<CollectionViewEntity>(message.Collection);
+
+      viewModel.Collections.OrderedMerge(viewEntity);
+
+      viewEntity.PropertyChanged += onCollectionViewEntityChanged;
+
+      //if (!settings.History.ContainsKey(message.Collection.Id)) {
+      //  settings.History[message.Collection.Id] = new List<string>();
+      //}
     }
 
     #endregion Private Methods

@@ -12,7 +12,7 @@ using STR.MvvmCommon;
 namespace Str.Wallpaper.Wpf.ViewModels {
 
   [Export]
-  [ViewModel("WallpaperViewModel")]
+  [ViewModel(nameof(WallpaperViewModel))]
   [SuppressMessage("ReSharper", "MemberCanBeInternal")]
   [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
   public sealed class WallpaperViewModel : ObservableObject {
