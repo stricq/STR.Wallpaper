@@ -173,6 +173,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Dialogs\CollectionEditorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Dialogs\OptionsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -200,6 +204,7 @@
     <Compile Include="Behaviors\PasswordBoxBehaviors.cs" />
     <Compile Include="Constants\DialogNames.cs" />
     <Compile Include="Controllers\CollectionsController.cs" />
+    <Compile Include="Controllers\Dialogs\CollectionEditorController.cs" />
     <Compile Include="Controllers\Dialogs\OptionsController.cs" />
     <Compile Include="Controllers\StatusBarController.cs" />
     <Compile Include="Controllers\WallpaperController.cs" />
@@ -216,6 +221,7 @@
     <Compile Include="ViewEntities\UserSettingsViewEntity.cs" />
     <Compile Include="ViewEntities\WindowSettingsViewEntity.cs" />
     <Compile Include="ViewModels\CollectionsViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\CollectionEditorViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\OptionsViewModel.cs" />
     <Compile Include="ViewModels\MainMenuViewModel.cs" />
     <Compile Include="ViewModels\NotifyIconViewModel.cs" />
@@ -223,6 +229,9 @@
     <Compile Include="ViewModels\WallpaperViewModel.cs" />
     <Compile Include="Views\CollectionsView.xaml.cs">
       <DependentUpon>CollectionsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\CollectionEditorView.xaml.cs">
+      <DependentUpon>CollectionEditorView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Dialogs\OptionsView.xaml.cs">
       <DependentUpon>OptionsView.xaml</DependentUpon>

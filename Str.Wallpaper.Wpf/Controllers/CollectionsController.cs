@@ -105,6 +105,8 @@ namespace Str.Wallpaper.Wpf.Controllers {
 
     private void registerCommands() {
       viewModel.AddCollection = new RelayCommandAsync(onAddCollectionExecuteAsync, canAddCollectionExecute);
+
+      menuViewModel.AddCollection = viewModel.AddCollection;
     }
 
     #region AddCollection Command
