@@ -9,6 +9,7 @@ namespace Str.Wallpaper.Wpf.ViewEntities {
 
   [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
   [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
+  [SuppressMessage("ReSharper", "MemberCanBeInternal")]
   public class CollectionViewEntity : ObservableObject, IComparable<CollectionViewEntity> {
 
     #region Private Fields
@@ -54,6 +55,8 @@ namespace Str.Wallpaper.Wpf.ViewEntities {
       set { SetField(ref totalWallpapers, value, () => TotalWallpapers); }
     }
 
+    public string Id { get; set; }
+
     public string Name {
       get { return name; }
       set { SetField(ref name, value, () => Name); }
@@ -64,14 +67,14 @@ namespace Str.Wallpaper.Wpf.ViewEntities {
       set { SetField(ref ownerName, value, () => OwnerName); }
     }
 
+    public string OwnerId { get; set; }
+
     public string Status => isPublic ? "Public" : "Private";
 
     public RelayCommand<ContextMenuEventArgs> ContextMenuOpening {
       get { return contextMenuOpening; }
       set { SetField(ref contextMenuOpening, value, () => ContextMenuOpening); }
     }
-
-    public string Id { get; set; }
 
     #endregion Properties
 

@@ -1,9 +1,11 @@
 ﻿using System;
 
+using STR.Common.Contracts;
+
 
 namespace Str.Wallpaper.Domain.Models {
 
-  public class DomainCollection {
+  public sealed class DomainCollection : IDeepCloneable {
 
     #region Properties
 

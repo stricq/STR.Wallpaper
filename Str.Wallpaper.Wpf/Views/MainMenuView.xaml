@@ -15,7 +15,7 @@
 
     <MenuItem Header="_Collections" Foreground="White">
 
-      <MenuItem Header="_Add"                                  Command="{Binding Path=AddCollection}"    Foreground="{StaticResource BackgroundColor}" />
+      <MenuItem Header="_Add Collection"                       Command="{Binding Path=AddCollection}"    Foreground="{StaticResource BackgroundColor}" />
       <MenuItem Header="{Binding Path=EditCollectionHeader}"   Command="{Binding Path=EditCollection}"   Foreground="{StaticResource BackgroundColor}" />
       <MenuItem Header="{Binding Path=DeleteCollectionHeader}" Command="{Binding Path=DeleteCollection}" Foreground="{StaticResource BackgroundColor}" />
 

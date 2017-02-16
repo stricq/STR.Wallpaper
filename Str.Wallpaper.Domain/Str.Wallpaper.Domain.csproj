@@ -34,6 +34,10 @@
       <HintPath>..\packages\AutoMapper.5.2.0\lib\net45\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="STR.Common, Version=1.0.5922.33591, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\STR.Common.1.0.16079.1\lib\net45\STR.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
