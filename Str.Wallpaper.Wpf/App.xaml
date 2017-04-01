@@ -13,6 +13,7 @@
         <ResourceDictionary Source="Resources/HeaderedContentStyle.xaml" />
         <ResourceDictionary Source="Resources/ListViewStyle.xaml" />
         <ResourceDictionary Source="Resources/TabItemStyle.xaml" />
+        <ResourceDictionary Source="Resources/TreeViewItemStyle.xaml" />
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>
   </Application.Resources>

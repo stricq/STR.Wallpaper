@@ -23,8 +23,18 @@ namespace Str.Wallpaper.Repository.Mapping {
                                                   .ForMember(dest => dest.AreSettingsChanged, opt => opt.Ignore())
                                                   .ReverseMap();
 
-      config.CreateMap<Collection, DomainCollection>().ForMember(dest => dest.TotalWallpapers, opt => opt.Ignore())
-                                                      .ForMember(dest => dest.TotalFolders,    opt => opt.Ignore());
+      config.CreateMap<Collection, DomainCollection>().ForMember(dest => dest.OwnerUserId,     opt => opt.MapFrom(src => src.OwnerId))
+                                                      .ForMember(dest => dest.TotalWallpapers, opt => opt.Ignore())
+                                                      .ForMember(dest => dest.TotalFolders,    opt => opt.Ignore())
+                                                      .ForMember(dest => dest.Folders,         opt => opt.Ignore());
+
+      config.CreateMap<Folder, DomainFolder>().ForMember(dest => dest.Metadata,   opt => opt.MapFrom(src => src.ImageInfo))
+                                              .ForMember(dest => dest.FolderType, opt => opt.MapFrom(src => src.Type))
+                                              .ForMember(dest => dest.Collection, opt => opt.Ignore())
+                                              .ForMember(dest => dest.Settings,   opt => opt.Ignore())
+                                              .ReverseMap();
+
+      config.CreateMap<ImageMetadata, DomainImageMetadata>().ReverseMap();
     }
 
     #endregion IAutoMapperConfiguration Implementation

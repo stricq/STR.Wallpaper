@@ -169,6 +169,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Resources\TreeViewItemStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\CollectionsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -178,6 +182,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Dialogs\OptionsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FolderTreeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -202,27 +210,33 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Behaviors\PasswordBoxBehaviors.cs" />
+    <Compile Include="Behaviors\TreeViewItemBehaviors.cs" />
     <Compile Include="Constants\DialogNames.cs" />
     <Compile Include="Controllers\CollectionsController.cs" />
     <Compile Include="Controllers\Dialogs\CollectionEditorController.cs" />
     <Compile Include="Controllers\Dialogs\OptionsController.cs" />
+    <Compile Include="Controllers\FolderTreeController.cs" />
     <Compile Include="Controllers\StatusBarController.cs" />
     <Compile Include="Controllers\WallpaperController.cs" />
     <Compile Include="Converters\IsMouseOverMultiConverter.cs" />
     <Compile Include="Mapping\ViewEntityMappingConfiguration.cs" />
     <Compile Include="Messages\Application\ApplicationSettingsChangedMessage.cs" />
     <Compile Include="Messages\Application\UserSettingsChangedMessage.cs" />
+    <Compile Include="Messages\Collections\CollectionCountsChanged.cs" />
+    <Compile Include="Messages\Collections\CollectionDeletingMessage.cs" />
     <Compile Include="Messages\Collections\CollectionEditMessage.cs" />
-    <Compile Include="Messages\Folders\CollectionsChangedMessage.cs" />
+    <Compile Include="Messages\Collections\CollectionsChangedMessage.cs" />
     <Compile Include="Messages\Status\StatusChangeWallpaperMessage.cs" />
     <Compile Include="Messages\Status\StatusTimerTickMessage.cs" />
     <Compile Include="ViewEntities\CollectionViewEntity.cs" />
+    <Compile Include="ViewEntities\FolderViewEntity.cs" />
     <Compile Include="ViewEntities\ProgramSettingsViewEntity.cs" />
     <Compile Include="ViewEntities\UserSettingsViewEntity.cs" />
     <Compile Include="ViewEntities\WindowSettingsViewEntity.cs" />
     <Compile Include="ViewModels\CollectionsViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\CollectionEditorViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\OptionsViewModel.cs" />
+    <Compile Include="ViewModels\FolderTreeViewModel.cs" />
     <Compile Include="ViewModels\MainMenuViewModel.cs" />
     <Compile Include="ViewModels\NotifyIconViewModel.cs" />
     <Compile Include="ViewModels\StatusBarViewModel.cs" />
@@ -235,6 +249,9 @@
     </Compile>
     <Compile Include="Views\Dialogs\OptionsView.xaml.cs">
       <DependentUpon>OptionsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FolderTreeView.xaml.cs">
+      <DependentUpon>FolderTreeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainMenuView.xaml.cs">
       <DependentUpon>MainMenuView.xaml</DependentUpon>
@@ -274,7 +291,6 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-    <None Include="Str.Wallpaper.Wpf.ruleset" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -307,6 +323,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Messages\Folders\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

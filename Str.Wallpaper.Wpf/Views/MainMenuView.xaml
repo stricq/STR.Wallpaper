@@ -3,9 +3,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:Str.Wallpaper.Wpf.ViewModels"
              xmlns:mvvm="http://schemas.stricq.com/mvvmcommon/"
              mvvm:ViewModelLocator.ComposedViewModel="MainMenuViewModel"
-             mc:Ignorable="d" d:DesignWidth="1024" d:DesignHeight="24">
+             mc:Ignorable="d" d:DesignWidth="1024" d:DesignHeight="24" d:DataContext="{d:DesignInstance vm:MainMenuViewModel, IsDesignTimeCreatable=True}">
 
   <Menu Height="24" Padding="0,2,0,0" BorderThickness="0,0,0,1" BorderBrush="{StaticResource StatusBarBorderColor}" Background="{StaticResource MenuGradient}">
 
@@ -22,6 +23,27 @@
     </MenuItem>
 
     <MenuItem Header="_Folders" Foreground="White">
+
+      <MenuItem Header="Add _Folder"    Command="{Binding Path=AddFolder}"    Foreground="{StaticResource BackgroundColor}" />
+      <MenuItem Header="Add _Images"    Command="{Binding Path=AddImages}"    Foreground="{StaticResource BackgroundColor}" />
+      <MenuItem Header="Add _Directory" Command="{Binding Path=AddDirectory}" Foreground="{StaticResource BackgroundColor}" />
+
+      <Separator Visibility="{Binding Path=IsRemoveRenameSeparatorVisible, Converter={StaticResource VisibilityConverter}}" />
+
+      <MenuItem Header="{Binding Path=RemoveFolderHeader}" Command="{Binding Path=RemoveFolder}" Visibility="{Binding Path=IsRemoveFolderVisible, Converter={StaticResource VisibilityConverter}}" Foreground="{StaticResource BackgroundColor}" />
+      <MenuItem Header="{Binding Path=RenameFolderHeader}" Command="{Binding Path=RenameFolder}" Visibility="{Binding Path=IsRenameFolderVisible, Converter={StaticResource VisibilityConverter}}" Foreground="{StaticResource BackgroundColor}" />
+
+      <Separator />
+
+      <MenuItem Header="_Collapse All" Command="{Binding Path=CollapseAll}" Foreground="{StaticResource BackgroundColor}" />
+      <MenuItem Header="_Expand All"   Command="{Binding Path=ExpandAll}"   Foreground="{StaticResource BackgroundColor}" />
+
+      <Separator />
+
+      <MenuItem Header="_View Error"       Command="{Binding Path=ViewLoadError}"  Foreground="{StaticResource BackgroundColor}" />
+      <MenuItem Header="Clear E_rror"      Command="{Binding Path=ClearError}"     Foreground="{StaticResource BackgroundColor}"/>
+      <MenuItem Header="Clear _All Errors" Command="{Binding Path=ClearAllErrors}" Foreground="{StaticResource BackgroundColor}" />
+
     </MenuItem>
 
     <MenuItem Header="_Settings" Foreground="White">

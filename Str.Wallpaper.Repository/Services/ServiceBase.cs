@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Net;
 
+using Microsoft.AspNet.SignalR.Client;
+
 using RestSharp;
 
 using Str.Wallpaper.Repository.Models.Dtos;
@@ -14,18 +16,25 @@ namespace Str.Wallpaper.Repository.Services {
 
     private const string AcceptJson = "application/json";
 
-    private const string RootUrl = "http://api.stricq.com/StrWallpaper";
+    private const string RootUrl = "http://api.stricq.com";
+//  private const string RootUrl = "http://localhost:20923";
+
+    private const string Path = "/StrWallpaper";
 
     [ThreadStatic]
     private static IRestClient client;
 
     #endregion Private Fields
 
+    protected static HubConnection CreateConnection() {
+      return new HubConnection($"{RootUrl}/signalr/hubs");
+    }
+
     protected static IRestClient Client {
       get {
         if (client != null) return client;
 
-        client = new RestClient(RootUrl);
+        client = new RestClient($"{RootUrl}{Path}");
 
         return client;
       }

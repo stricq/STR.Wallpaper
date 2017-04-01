@@ -8,7 +8,7 @@
           <Grid>
             <Border Name="Background" CornerRadius="2" Padding="6,3,6,4" Background="{StaticResource TabItemSelectedGradient}" BorderThickness="1" BorderBrush="{StaticResource TabItemBorderSelectedColor}">
               <ContentPresenter Name="ContentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" TextBlock.Foreground="White"
-                                VerticalAlignment="{TemplateBinding VerticalAlignment}" HorizontalAlignment="Center" Margin="{TemplateBinding Margin}" />
+                                VerticalAlignment="{TemplateBinding VerticalAlignment}" HorizontalAlignment="Center" />
             </Border>
           </Grid>
           <ControlTemplate.Triggers>

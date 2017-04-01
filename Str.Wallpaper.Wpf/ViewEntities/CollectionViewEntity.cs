@@ -67,7 +67,7 @@ namespace Str.Wallpaper.Wpf.ViewEntities {
       set { SetField(ref ownerName, value, () => OwnerName); }
     }
 
-    public string OwnerId { get; set; }
+    public string OwnerUserId { get; set; }
 
     public string Status => isPublic ? "Public" : "Private";
 

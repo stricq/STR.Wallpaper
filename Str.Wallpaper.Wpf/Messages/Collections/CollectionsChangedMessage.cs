@@ -5,9 +5,9 @@ using Str.Wallpaper.Domain.Models;
 using STR.Common.Messages;
 
 
-namespace Str.Wallpaper.Wpf.Messages.Folders {
+namespace Str.Wallpaper.Wpf.Messages.Collections {
 
-  public class CollectionsChangedMessage : MessageBase {
+  internal sealed class CollectionsChangedMessage : MessageBase {
 
     public List<DomainCollection> Collections { get; set; }
 

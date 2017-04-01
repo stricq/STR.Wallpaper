@@ -16,7 +16,6 @@ using Str.Wallpaper.Domain.Models;
 
 using Str.Wallpaper.Wpf.Messages.Application;
 using Str.Wallpaper.Wpf.Messages.Collections;
-using Str.Wallpaper.Wpf.Messages.Folders;
 using Str.Wallpaper.Wpf.ViewEntities;
 using Str.Wallpaper.Wpf.ViewModels;
 
@@ -36,6 +35,7 @@ namespace Str.Wallpaper.Wpf.Controllers {
 
     #region Private Fields
 
+    private bool isApplicationLoaded;
     private bool isLongRunningTask;
 
     private CollectionViewEntity  contextCollection;
@@ -82,6 +82,8 @@ namespace Str.Wallpaper.Wpf.Controllers {
       registerMessages();
       registerCommands();
 
+      setMenuHeaders();
+
       await Task.CompletedTask;
     }
 
@@ -96,6 +98,8 @@ namespace Str.Wallpaper.Wpf.Controllers {
     }
 
     private async Task onApplicationLoaded(ApplicationLoadedMessage message) {
+      isApplicationLoaded = true;
+
       await loadCollectionsAsync();
     }
 
@@ -153,7 +157,7 @@ namespace Str.Wallpaper.Wpf.Controllers {
     #region EditCollection Command
 
     private bool canEditCollectionExecute() {
-      return selectedCollection != null && selectedCollection.OwnerId == user.Id && user.IsOnline && !isLongRunningTask;
+      return selectedCollection != null && selectedCollection.OwnerUserId == user.Id && user.IsOnline && !isLongRunningTask;
     }
 
     private async Task onEditCollectionExecuteAsync() {
@@ -169,7 +173,7 @@ namespace Str.Wallpaper.Wpf.Controllers {
     #region DeleteCollection Command
 
     private bool canDeleteCollectionExecute() {
-      return selectedCollection != null && selectedCollection.OwnerId == user.Id && user.IsOnline && !isLongRunningTask;
+      return selectedCollection != null && selectedCollection.OwnerUserId == user.Id && user.IsOnline && !isLongRunningTask;
     }
 
     private async Task onDeleteCollectionExecuteAsync() {
@@ -185,6 +189,8 @@ namespace Str.Wallpaper.Wpf.Controllers {
     #region Private Methods
 
     private async Task loadCollectionsAsync() {
+      if (!isApplicationLoaded) return;
+
       if (!user?.IsOnline ?? true) {
         viewModel.Collections.ForEach(c => c.PropertyChanged -= onCollectionViewEntityChanged);
 
@@ -270,13 +276,13 @@ namespace Str.Wallpaper.Wpf.Controllers {
         return;
       }
 
-      if (collections.Any(collection => collection.OwnerId == user.Id && collection.Name == message.Collection.Name)) {
+      if (collections.Any(collection => collection.OwnerUserId == user.Id && collection.Name == message.Collection.Name)) {
         messenger.Send(new MessageBoxDialogMessage { Header = "Duplicate Name", Message = "A collection already exists with that name.", HasCancel = false });
 
         return;
       }
 
-      message.Collection.OwnerId   = user.Id;
+      message.Collection.OwnerUserId   = user.Id;
       message.Collection.OwnerName = user.Username;
       message.Collection.Created   = DateTime.Now;
 
@@ -308,7 +314,7 @@ namespace Str.Wallpaper.Wpf.Controllers {
         return;
       }
 
-      if (viewModel.Collections.Any(c => c.OwnerId == user.Id
+      if (viewModel.Collections.Any(c => c.OwnerUserId == user.Id
                                       && c.Name    == message.Collection.Name
                                       && c.Id      != message.OriginalCollection.Id)) {
         messenger.Send(new MessageBoxDialogMessage { Header = "Duplicate Name", Message = "A collection already exists with that name." });
@@ -322,14 +328,14 @@ namespace Str.Wallpaper.Wpf.Controllers {
       collection.IsPublic = message.Collection.IsPublic;
 
       await collectionService.SaveCollectionAsync(user, collection);
-      //
-      // Sort in place does not work here as selection information is lost
-      //
+
       CollectionViewEntity entity = viewModel.Collections.Single(cve => cve.Id == collection.Id);
 
       entity.Name     = collection.Name;
       entity.IsPublic = collection.IsPublic;
-
+      //
+      // Sort in place does not work here as selection information is lost
+      //
       viewModel.Collections.Remove(entity);
 
       viewModel.Collections.OrderedMerge(entity);
@@ -353,6 +359,8 @@ namespace Str.Wallpaper.Wpf.Controllers {
       collections.Remove(collection);
 
       Task.Run(onCollectionSelectedAsync).FireAndForget();
+
+      messenger.Send(new CollectionDeletingMessage { Collection = collection });
 
       selectedCollection = null;
 

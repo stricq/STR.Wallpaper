@@ -43,6 +43,7 @@
         </Grid.ColumnDefinitions>
 
         <Grid Grid.Column="0" Margin="0,0,6,0" mvvm:FrameworkElementBehaviors.SizeChangedCommand="{Binding Path=SizeChanged}">
+          <v:FolderTreeView />
         </Grid>
 
         <GridSplitter Grid.Column="1" Margin="0,-6,0,-6" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource GridSplitterGradientLeftRight}" />

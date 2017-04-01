@@ -51,7 +51,7 @@ namespace Str.Wallpaper.Wpf {
           mapperConfiguration.AssertConfigurationIsValid();
         }
         catch(Exception ex) {
-          MessageBox.Show(ex.Message, "Mapping Error");
+          MessageBox.Show(ex.Message, "Mapping Validation Error");
         }
 
         container.RegisterInstance(mapperConfiguration.CreateMapper());

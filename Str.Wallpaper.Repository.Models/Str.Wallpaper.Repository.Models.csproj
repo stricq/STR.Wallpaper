@@ -30,6 +30,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -40,9 +41,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dtos\CheckImageDto.cs" />
     <Compile Include="Dtos\CollectionCountsDto.cs" />
     <Compile Include="Dtos\Collection.cs" />
     <Compile Include="Dtos\CollectionsDto.cs" />
+    <Compile Include="Dtos\Folder.cs" />
+    <Compile Include="Dtos\FoldersDto.cs" />
+    <Compile Include="Dtos\FolderType.cs" />
+    <Compile Include="Dtos\ImageMetadata.cs" />
+    <Compile Include="Dtos\ImageSettings.cs" />
+    <Compile Include="Dtos\LayoutType.cs" />
+    <Compile Include="Dtos\PlacementType.cs" />
+    <Compile Include="Dtos\UserImageSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Dtos\ServiceResponseBase.cs" />
     <Compile Include="Settings\ProgramSettings.cs" />

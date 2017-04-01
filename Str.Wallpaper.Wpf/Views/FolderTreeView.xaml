@@ -1,0 +1,107 @@
+﻿<UserControl x:Class="Str.Wallpaper.Wpf.Views.FolderTreeView" x:ClassModifier="internal"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:b="clr-namespace:Str.Wallpaper.Wpf.Behaviors"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:dd="urn:gong-wpf-dragdrop"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ve="clr-namespace:Str.Wallpaper.Wpf.ViewEntities"
+             xmlns:vm="clr-namespace:Str.Wallpaper.Wpf.ViewModels"
+             xmlns:mvvm="http://schemas.stricq.com/mvvmcommon/"
+             mvvm:ViewModelLocator.ComposedViewModel="FolderTreeViewModel"
+             mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="600" d:DataContext="{d:DesignInstance vm:FolderTreeViewModel, IsDesignTimeCreatable=True}">
+
+  <UserControl.Resources>
+    <DataTemplate x:Key="DragAndDropListAdorner" DataType="ve:FolderViewEntity">
+      <Border Background="{StaticResource ListItemSelectedErrorColor}" BorderThickness="0" CornerRadius="3" Margin="0,1" UseLayoutRounding="True" SnapsToDevicePixels="True">
+        <StackPanel Orientation="Horizontal">
+          <fa:ImageAwesome Icon="{Binding Path=Icon}" Foreground="{Binding Path=IconColor}" />
+          <TextBlock       Text="{Binding Path=Name}" Margin="0,0,4,0" HorizontalAlignment="Left" Foreground="White" FontFamily="Tahoma" FontSize="12" />
+        </StackPanel>
+      </Border>
+    </DataTemplate>
+  </UserControl.Resources>
+
+  <Grid>
+    <HeaderedContentControl Header="{Binding Path=CollectionName}" Style="{StaticResource TallHeaderedContentStyle}">
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="*" />
+          <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TreeView Grid.Row="0" ItemsSource="{Binding Path=Folders}" Margin="0" BorderThickness="0,0,0,1" FontFamily="Tahoma" FontSize="12" IsEnabled="{Binding Path=IsTreeViewEnabled}"
+                  Foreground="{StaticResource ForegroundColor}" Background="{StaticResource BackgroundColor}" BorderBrush="{StaticResource ContentControlBorderColor}"
+                  VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling"
+                  mvvm:FrameworkElementBehaviors.ContextMenuOpeningCommand="{Binding Path=ContextMenuOpening}"
+                  mvvm:FrameworkElementBehaviors.ContextMenuClosingCommand="{Binding Path=ContextMenuClosing}"
+                  mvvm:UIElementBehaviors.PreviewKeyDownCommand="{Binding Path=PreviewKeyDown}"
+                  b:TreeViewItemBehaviors.PreventHorizontalScroll="True"
+                  dd:DragDrop.IsDragSource="True"
+                  dd:DragDrop.IsDropTarget="True"
+                  dd:DragDrop.DropHandler="{Binding Path=DropTarget}"
+                  dd:DragDrop.DragHandler="{Binding Path=DragSource}"
+                  dd:DragDrop.DragAdornerTemplate="{StaticResource DragAndDropListAdorner}">
+
+          <TreeView.Resources>
+            <HierarchicalDataTemplate DataType="{x:Type ve:FolderViewEntity}" ItemsSource="{Binding Path=Children}">
+              <Grid>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="Auto" />
+                  <ColumnDefinition Width="Auto" />
+                  <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <fa:ImageAwesome Grid.Column="0" Icon="{Binding Path=Icon}" Margin="4,0" Foreground="{Binding Path=IconColor}" Width="16" Height="16" Focusable="False" />
+                <CheckBox        Grid.Column="1" Content="{x:Null}" IsChecked="{Binding Path=IsChecked}" Margin="0,0,0,2" Focusable="False" />
+                <TextBlock       Grid.Column="2" Text="{Binding Path=Name}" HorizontalAlignment="Left" Margin="4,0" ToolTip="{Binding Path=Name}" Foreground="{StaticResource ForegroundColor}" />
+
+              </Grid>
+            </HierarchicalDataTemplate>
+          </TreeView.Resources>
+
+          <TreeView.ContextMenu>
+            <ContextMenu>
+
+              <MenuItem Header="Add Folder"    Command="{Binding Path=AddFolder}" />
+              <MenuItem Header="Add Images"    Command="{Binding Path=AddImages}" />
+              <MenuItem Header="Add Directory" Command="{Binding Path=AddDirectory}" />
+
+              <Separator Visibility="{Binding Path=IsRemoveRenameSeparatorVisible, Converter={StaticResource VisibilityConverter}}" />
+
+              <MenuItem Header="{Binding Path=RemoveHeader}" Command="{Binding Path=RemoveFolder}" Visibility="{Binding Path=IsRemoveVisible, Converter={StaticResource VisibilityConverter}}" />
+              <MenuItem Header="{Binding Path=RenameHeader}" Command="{Binding Path=RenameFolder}" Visibility="{Binding Path=IsRenameVisible, Converter={StaticResource VisibilityConverter}}" />
+
+              <Separator />
+
+              <MenuItem Header="Collapse All"  Command="{Binding Path=CollapseAll}" />
+              <MenuItem Header="Expand All"    Command="{Binding Path=ExpandAll}" />
+
+              <Separator />
+
+              <MenuItem Header="View Error"       Command="{Binding Path=ViewLoadError}" />
+              <MenuItem Header="Clear Error"      Command="{Binding Path=ClearError}" />
+              <MenuItem Header="Clear All Errors" Command="{Binding Path=ClearAllErrors}" />
+
+            </ContextMenu>
+          </TreeView.ContextMenu>
+
+        </TreeView>
+
+        <Grid Grid.Row="1" Margin="6">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+          </Grid.ColumnDefinitions>
+
+          <Button Grid.Column="0" Content="Select Random"    Width="120" Command="{Binding Path=SelectRandom}" HorizontalAlignment="Left" />
+          <Button Grid.Column="1" Content="Set As Wallpaper" Width="120" Command="{Binding Path=SetWallpaper}" HorizontalAlignment="Right" />
+
+        </Grid>
+
+      </Grid>
+    </HeaderedContentControl>
+  </Grid>
+
+</UserControl>
