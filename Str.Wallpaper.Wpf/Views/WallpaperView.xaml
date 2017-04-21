@@ -3,6 +3,7 @@
         xmlns:v="clr-namespace:Str.Wallpaper.Wpf.Views"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:dv="http://schemas.stricq.com/dialogview/"
+        xmlns:cef="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"
         xmlns:mvvm="http://schemas.stricq.com/mvvmcommon/"
         mvvm:UIElementBehaviors.Focus="{Binding Path=Focus}"
         mvvm:FrameworkElementBehaviors.InitializedCommand="{Binding Path=Initialized}"
@@ -61,6 +62,10 @@
           </TabItem>
 
           <TabItem Header="Wallpaper Preview">
+          </TabItem>
+
+          <TabItem Header="Feed Browser">
+            <cef:ChromiumWebBrowser Address="https://www.google.com/" />
           </TabItem>
 
         </TabControl>

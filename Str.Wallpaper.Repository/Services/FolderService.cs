@@ -59,7 +59,7 @@ namespace Str.Wallpaper.Repository.Services {
 
       HubConnection connection = CreateConnection();
 
-      connection.DeadlockErrorTimeout = TimeSpan.FromSeconds(30);
+      connection.DeadlockErrorTimeout = TimeSpan.FromSeconds(60);
 
       IHubProxy foldersProxy = connection.CreateHubProxy(Hub);
 
